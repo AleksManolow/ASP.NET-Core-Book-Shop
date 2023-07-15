@@ -1,6 +1,7 @@
 using BookShopSystem.Data;
 using BookShopSystem.Data.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace BookShopSystem.Web
 {
