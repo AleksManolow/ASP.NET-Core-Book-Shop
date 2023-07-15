@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BookShopSystem.Common\BookShopSystem.Common.csproj" />
+    <ProjectReference Include="..\BookShopSystem.Data.Models\BookShopSystem.Data.Models.csproj" />
     <ProjectReference Include="..\BookShopSystem.Data\BookShopSystem.Data.csproj" />
     <ProjectReference Include="..\BookShopSystem.Web.ViewModels\BookShopSystem.Web.ViewModels.csproj" />
   </ItemGroup>

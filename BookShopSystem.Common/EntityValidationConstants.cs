@@ -24,5 +24,18 @@
             public const string PriceMinLength = "0";
             public const string PriceMaxLength = "2000";
         }
+
+        public static class Manager
+        {
+            public const int FirstNameMinLength = 2;
+            public const int FirstNameMaxLength = 50;
+
+            public const int LastNameMinLength = 2;
+            public const int LastNameMaxLength = 50;
+
+            public const int PhoneNumberMinLength = 7;
+            public const int PhoneNumberMaxLength = 15;
+        }
+
     }
 }
