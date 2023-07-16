@@ -55,6 +55,7 @@ namespace BookShopSystem.Data
                     Id = 8,
                     Name = "Contemporary"
                 });
+
             builder.Entity<Book>()
                 .HasData(new Book()
                 {
@@ -82,6 +83,7 @@ namespace BookShopSystem.Data
                     ManagerId = Guid.Parse("b9517783-f4cd-4c5b-043d-08db771ab7f4")
 
                 });
+
             builder.Entity<Purchase>()
                 .HasKey(p => new { p.UserId, p.BookId });
 
