@@ -2,6 +2,8 @@ using BookShopSystem.Data;
 using BookShopSystem.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using BookShopSystem.Web.Infrastructure.Extensions;
+using BookShopSystem.Services.Data.Interfaces;
 
 namespace BookShopSystem.Web
 {
@@ -23,6 +25,8 @@ namespace BookShopSystem.Web
                 options.Password.RequireNonAlphanumeric = false;
             })
                 .AddEntityFrameworkStores<BookShopDbContext>();
+
+            builder.Services.AddApplicationServices(typeof(IBookService));
 
             builder.Services.AddControllersWithViews();
 

@@ -1,4 +1,5 @@
-﻿using BookShopSystem.Web.ViewModels.Home;
+﻿using BookShopSystem.Services.Data.Interfaces;
+using BookShopSystem.Web.ViewModels.Home;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -6,14 +7,16 @@ namespace BookShopSystem.Web.Controllers
 {
     public class HomeController : Controller
     {
-        public HomeController()
+        private readonly IBookService bookService;
+        public HomeController(IBookService bookService)
         {
-
+            this.bookService = bookService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            IEnumerable<IndexViewModel> viewModels = await bookService.TopThreeSellingBooksAsync();
+            return View(viewModels);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

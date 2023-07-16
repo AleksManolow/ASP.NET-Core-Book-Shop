@@ -14,6 +14,12 @@ namespace BookShopSystem.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder
+                .Entity<Book>()
+                .Property(b => b.NumberOfSales)
+                .HasDefaultValue(0);
+               
+
             builder.Entity<Genre>()
                 .HasData(new Genre()
                 {

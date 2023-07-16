@@ -34,6 +34,9 @@ namespace BookShopSystem.Data.Models
         public decimal Price { get; set; }
 
         [Required]
+        public int NumberOfSales { get; set; }
+
+        [Required]
         [Range(0, 18)]
         public int AgeRestriction { get; set; }
 
