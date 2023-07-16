@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BookShopSystem.Data.Migrations
 {
-    public partial class InitializeDb : Migration
+    public partial class initDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -266,6 +266,21 @@ namespace BookShopSystem.Data.Migrations
                         column: x => x.BookId,
                         principalTable: "Books",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.InsertData(
+                table: "Genres",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Fantasy" },
+                    { 2, "Sci-Fi" },
+                    { 3, "Mystery" },
+                    { 4, "Thriller" },
+                    { 5, "Romance" },
+                    { 6, "Westerns" },
+                    { 7, "Dystopian" },
+                    { 8, "Contemporary" }
                 });
 
             migrationBuilder.CreateIndex(

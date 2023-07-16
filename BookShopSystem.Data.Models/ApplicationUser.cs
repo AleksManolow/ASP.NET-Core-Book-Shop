@@ -6,6 +6,10 @@ namespace BookShopSystem.Data.Models
 {
     public class ApplicationUser:IdentityUser<Guid>
     {
+        public ApplicationUser()
+        {
+            this.Id = Guid.NewGuid();
+        }
         [PersonalData]
         [StringLength(50)]
         public string FirstName { get; set; } = null!;

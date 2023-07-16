@@ -12,14 +12,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookShopSystem.Data.Migrations
 {
     [DbContext(typeof(BookShopDbContext))]
-    [Migration("20230715071503_InitializeDb")]
-    partial class InitializeDb
+    [Migration("20230716084605_initDb")]
+    partial class initDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.10")
+                .HasAnnotation("ProductVersion", "6.0.20")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -172,6 +172,48 @@ namespace BookShopSystem.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Genres");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Fantasy"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Sci-Fi"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Mystery"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Thriller"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Romance"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Westerns"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "Dystopian"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Name = "Contemporary"
+                        });
                 });
 
             modelBuilder.Entity("BookShopSystem.Data.Models.Manager", b =>

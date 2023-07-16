@@ -6,6 +6,11 @@ namespace BookShopSystem.Data.Models
 {
     public class Book
     {
+        public Book()
+        {
+            this.Id = Guid.NewGuid();
+        }
+
         [Key]
         public Guid Id { get; set; }
 

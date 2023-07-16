@@ -5,6 +5,10 @@ namespace BookShopSystem.Data.Models
 {
     public class Manager
     {
+        public Manager()
+        {
+            this.Id = Guid.NewGuid();
+        }
         [Key]
         public Guid Id { get; set; }
 
