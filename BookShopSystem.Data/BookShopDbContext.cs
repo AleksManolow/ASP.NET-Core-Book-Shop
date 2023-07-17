@@ -16,6 +16,12 @@ namespace BookShopSystem.Data
         {
             builder
                 .Entity<Book>()
+                .Property(x => x.ImageUrl)
+                .HasColumnName("ImageUrl");
+
+
+            builder
+                .Entity<Book>()
                 .Property(b => b.NumberOfSales)
                 .HasDefaultValue(0);
                
@@ -68,7 +74,7 @@ namespace BookShopSystem.Data
                     Title = "Anna Karenina",
                     Author = "Leo Tolstoy",
                     Description = "Acclaimed by many as the world's greatest novel, Anna Karenina provides a vast panorama of contemporary life in Russia and of humanity in general.",
-                    ImageUrn = "https://www.goodreads.com/book/show/15823480-anna-karenina",
+                    ImageUrl = "https://data.logograph.com/resize/LyricTheatre/multimedia/Image/4561/Art%20Cinema%20April%20Webslug%20-%20Anna%20Karenina.jpg?width=1500",
                     Price = 20,
                     AgeRestriction = 12,
                     ReleaseDate = DateTime.Parse("1877-06-26 10:57:31.1728595"),
@@ -81,7 +87,7 @@ namespace BookShopSystem.Data
                     Title = "The War of the Worlds",
                     Author = "H.G. Wells",
                     Description = "The War of the Worlds by H.G. Wells is about a fictional invasion of Southern England by Martians. The military is powerless against the Martians' superior weapons, and many people die. The Martians are eventually killed by bacterial infection.",
-                    ImageUrn = "https://www.gutenberg.org/files/36/36-h/36-h.htm",
+                    ImageUrl = "https://productimages.worldofbooks.com/1494745429.jpg",
                     Price = 30,
                     AgeRestriction = 16,
                     ReleaseDate = DateTime.Parse("1898-06-26 10:57:31.1728595"),

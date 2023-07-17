@@ -4,6 +4,7 @@ using BookShopSystem.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookShopSystem.Data.Migrations
 {
     [DbContext(typeof(BookShopDbContext))]
-    partial class BookShopDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230717081021_NewChangesOnProp")]
+    partial class NewChangesOnProp
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -162,12 +164,12 @@ namespace BookShopSystem.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("18424b33-82ed-4c65-82f2-343a50b5ad9c"),
+                            Id = new Guid("98fe9b08-3139-48c1-a87a-b7ba6fec81e5"),
                             AgeRestriction = 12,
                             Author = "Leo Tolstoy",
                             Description = "Acclaimed by many as the world's greatest novel, Anna Karenina provides a vast panorama of contemporary life in Russia and of humanity in general.",
                             GenreId = 1,
-                            ImageUrl = "https://data.logograph.com/resize/LyricTheatre/multimedia/Image/4561/Art%20Cinema%20April%20Webslug%20-%20Anna%20Karenina.jpg?width=1500",
+                            ImageUrl = "https://www.goodreads.com/book/show/15823480-anna-karenina",
                             IsActive = true,
                             ManagerId = new Guid("b9517783-f4cd-4c5b-043d-08db771ab7f4"),
                             NumberOfSales = 0,
@@ -177,12 +179,12 @@ namespace BookShopSystem.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("f9e19c32-77d8-4121-9349-38b0ae0db530"),
+                            Id = new Guid("71694f32-dd73-4399-a0a8-bc718f2aadcb"),
                             AgeRestriction = 16,
                             Author = "H.G. Wells",
                             Description = "The War of the Worlds by H.G. Wells is about a fictional invasion of Southern England by Martians. The military is powerless against the Martians' superior weapons, and many people die. The Martians are eventually killed by bacterial infection.",
                             GenreId = 5,
-                            ImageUrl = "https://productimages.worldofbooks.com/1494745429.jpg",
+                            ImageUrl = "https://www.gutenberg.org/files/36/36-h/36-h.htm",
                             IsActive = true,
                             ManagerId = new Guid("b9517783-f4cd-4c5b-043d-08db771ab7f4"),
                             NumberOfSales = 0,

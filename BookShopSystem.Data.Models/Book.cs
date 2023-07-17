@@ -27,8 +27,8 @@ namespace BookShopSystem.Data.Models
         public string Description { get; set; } = null!;
 
         [Required]
-        [MaxLength(ImageUrnMaxLength)]
-        public string ImageUrn { get; set; } = null!;
+        [MaxLength(ImageUrlMaxLength)]
+        public string ImageUrl { get; set; } = null!;
 
         [Required]
         public decimal Price { get; set; }

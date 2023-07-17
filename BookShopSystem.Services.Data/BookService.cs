@@ -25,7 +25,7 @@ namespace BookShopSystem.Services.Data
                 {
                     Id = b.Id.ToString(),
                     Title = b.Title,
-                    ImageUrl = b.ImageUrn
+                    ImageUrl = b.ImageUrl
                 })
                 .ToArrayAsync();
 
