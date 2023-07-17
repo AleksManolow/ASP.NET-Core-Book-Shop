@@ -64,5 +64,14 @@ namespace BookShopSystem.Services.Data
             await this.dbContext.Managers.AddAsync(newManager);
             await this.dbContext.SaveChangesAsync();
         }
+
+        public async Task<string> GetManagerIdByUserIdAsync(string userId)
+        {
+            Manager? manager = await this.dbContext
+                .Managers
+                .FirstOrDefaultAsync(m => m.UserId.ToString() == userId);
+
+            return manager!.Id.ToString();
+        }
     }
 }

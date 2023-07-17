@@ -25,5 +25,14 @@ namespace BookShopSystem.Services.Data
                 .ToArrayAsync();
             return bookSelectGenreFormModels;
         }
+
+        public async Task<bool> ExistsByIdAsync(int id)
+        {
+            bool result = await this.dbContext
+                .Genres
+                .AnyAsync(c => c.Id == id);
+
+            return result;
+        }
     }
 }

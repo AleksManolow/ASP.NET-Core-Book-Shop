@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using BookShopSystem.Web.Infrastructure.Extensions;
 using BookShopSystem.Services.Data.Interfaces;
+using HouseRentingSystem.Web.Infrastructure.ModelBinders;
 
 namespace BookShopSystem.Web
 {
@@ -28,7 +29,12 @@ namespace BookShopSystem.Web
 
             builder.Services.AddApplicationServices(typeof(IBookService));
 
-            builder.Services.AddControllersWithViews();
+            builder.Services
+                .AddControllersWithViews()
+                .AddMvcOptions(options =>
+                {
+                    options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
+                });
 
             var app = builder.Build();
 

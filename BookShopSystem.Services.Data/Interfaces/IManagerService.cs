@@ -6,9 +6,9 @@ namespace BookShopSystem.Services.Data.Interfaces
     {
         Task<bool> ManagerExistsByUserIdAsync(string userId);
         Task<bool> ManagerExistsByPhoneNumberAsync(string phoneNumber);
-
         Task<bool> HasBooksByUserIdAsync(string userId);
-
         Task Create(string userId, BecomeManagerFormModel model);
+
+        Task<string> GetManagerIdByUserIdAsync(string userId);
     }
 }
