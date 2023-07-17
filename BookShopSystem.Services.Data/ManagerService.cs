@@ -14,6 +14,7 @@ namespace BookShopSystem.Services.Data
         {
             this.dbContext = dbContext;
         }
+
         public async Task<bool> ManagerExistsByUserIdAsync(string userId)
         {
             bool result = await dbContext
