@@ -85,7 +85,7 @@ namespace BookShopSystem.Web.Areas.Identity.Pages.Account
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [Required]
-            [StringLength(50, MinimumLength = 5)]
+            [StringLength(50, MinimumLength = 2)]
             public string FirstName { get; set; }
 
             /// <summary>
@@ -93,7 +93,7 @@ namespace BookShopSystem.Web.Areas.Identity.Pages.Account
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [Required]
-            [StringLength(50, MinimumLength = 5)]
+            [StringLength(50, MinimumLength = 2)]
             public string LastName { get; set; }
 
             /// <summary>
