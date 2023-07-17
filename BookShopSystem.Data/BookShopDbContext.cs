@@ -16,6 +16,11 @@ namespace BookShopSystem.Data
         {
             builder
                 .Entity<Book>()
+                .Property(b => b.ReleaseDate)
+                .HasDefaultValueSql("GETDATE()");
+
+            builder
+                .Entity<Book>()
                 .Property(x => x.ImageUrl)
                 .HasColumnName("ImageUrl");
 

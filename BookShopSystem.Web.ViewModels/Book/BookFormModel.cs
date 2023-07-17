@@ -34,10 +34,8 @@ namespace BookShopSystem.Web.ViewModels.Book
 
         [Required]
         [Range(0, 18)]
+        [Display(Name = "Age Restriction")]
         public int AgeRestriction { get; set; }
-
-        [Required]
-        public string ReleaseDate { get; set; } = null!;
 
         [Display(Name = "Genre")]
         public int GenreId { get; set; }
