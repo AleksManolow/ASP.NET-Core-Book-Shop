@@ -1,29 +1,34 @@
-﻿@model IEnumerable<IndexViewModel>
+﻿@using BookShopSystem.Services.Data.Interfaces;
+@using BookShopSystem.Web.Infrastructure.Extensions;
+@model IEnumerable<IndexViewModel>
+
+@inject IManagerService ManagerService
 @{
     ViewData["Title"] = "Home Page";
 
     var books = Model.ToList();
+    var isUserManager = await ManagerService.ManagerExistsByUserIdAsync(this.User.GetId()!);
 }
 
-@*@if (!books.Any())
+@if (!books.Any())
 {
-    <div class="mt-4 p-5 bg-light">
-        <h1 class="display-4">Welcome to the best place for renting houses!</h1>
-        <p class="lead">
-            There are no houses in the system currently available so why don't you just add one?
+    <div class="mt-4 p-5">
+        <h1 class="display-4">Welcome to the best place for selling books!</h1>
+        <p class="lead text-white">
+            There are no books in the system currently available so why don't you just add one?
         </p>
         <hr class="my-4">
         <p class="lead">
             @if (User.Identity?.IsAuthenticated ?? false)
             {
-                @if (isUserAgent)
+                @if (isUserManager)
                 {
-                    <a asp-controller="House" asp-action="Add" class="btn btn-primary btn-lg" role="button">Add House</a>
+                    <a asp-controller="Book" asp-action="Add" class="btn btn-primary btn-lg" role="button">Add Book</a>
                 }
             }
         </p>
     </div>
-}*@
+}
 
 <div class="mb-5"></div>
 
