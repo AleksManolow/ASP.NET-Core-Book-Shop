@@ -6,5 +6,7 @@ namespace BookShopSystem.Services.Data.Interfaces
     {
         Task<IEnumerable<BookSelectGenreFormModel>> AllGenriesAsync();
         Task<bool> ExistsByIdAsync(int id);
+
+        Task<IEnumerable<string>> AllGenriesNamesAsync();
     }
 }

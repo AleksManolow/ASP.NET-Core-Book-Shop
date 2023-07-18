@@ -1,4 +1,5 @@
 ﻿using BookShopSystem.Services.Data.Interfaces;
+using BookShopSystem.Services.Data.Models.Book;
 using BookShopSystem.Web.Infrastructure.Extensions;
 using BookShopSystem.Web.ViewModels.Book;
 using Microsoft.AspNetCore.Authorization;
@@ -21,13 +22,18 @@ namespace BookShopSystem.Web.Controllers
             this.managerService = managerService;   
         }
 
-        /*[HttpGet]
+        [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> Books()
+        public async Task<IActionResult> All([FromQuery]AllBookQueryModel queryModel)
         {
+            AllBooksFilteredAndPagedServiceModel serviceModel = await this.bookService.AllAsync(queryModel);
 
-            return View();
-        }*/
+            queryModel.Books = serviceModel.Books;
+            queryModel.TotalBooks = serviceModel.TotalBooksCount;
+            queryModel.Genries = await this.genreService.AllGenriesNamesAsync();
+
+            return this.View(queryModel);
+        }
         [HttpGet]
         public async Task<IActionResult> Add()
         {

@@ -26,6 +26,15 @@ namespace BookShopSystem.Services.Data
             return bookSelectGenreFormModels;
         }
 
+        public async Task<IEnumerable<string>> AllGenriesNamesAsync()
+        {
+            IEnumerable<string> allNames = await this.dbContext.Genres
+                .Select(g => g.Name)
+                .ToArrayAsync();
+
+            return allNames;
+        }
+
         public async Task<bool> ExistsByIdAsync(int id)
         {
             bool result = await this.dbContext

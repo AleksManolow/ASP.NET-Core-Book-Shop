@@ -1,7 +1,9 @@
 ﻿using BookShopSystem.Data;
 using BookShopSystem.Data.Models;
 using BookShopSystem.Services.Data.Interfaces;
+using BookShopSystem.Services.Data.Models.Book;
 using BookShopSystem.Web.ViewModels.Book;
+using BookShopSystem.Web.ViewModels.Book.Enums;
 using BookShopSystem.Web.ViewModels.Home;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,6 +16,67 @@ namespace BookShopSystem.Services.Data
         public BookService(BookShopDbContext dbContext)
         {
             this.dbContext = dbContext;
+        }
+
+        public async Task<AllBooksFilteredAndPagedServiceModel> AllAsync(AllBookQueryModel queryModel)
+        {
+            IQueryable<Book> booksQuery = this.dbContext
+                .Books
+                .AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(queryModel.Genre))
+            {
+                booksQuery = booksQuery
+                    .Where(b => b.Genre.Name == queryModel.Genre);
+            }
+
+            if (!string.IsNullOrWhiteSpace(queryModel.SearchString))
+            {
+                string wildCard = $"%{queryModel.SearchString.ToLower()}%";
+
+                booksQuery = booksQuery
+                    .Where(h => EF.Functions.Like(h.Title, wildCard) ||
+                                EF.Functions.Like(h.Author, wildCard) ||
+                                EF.Functions.Like(h.Description, wildCard));
+            }
+
+            booksQuery = queryModel.BookSorting switch
+            {
+                BookSorting.Newest => booksQuery
+                    .OrderByDescending(b => b.ReleaseDate),
+                BookSorting.Oldest => booksQuery
+                    .OrderBy(b => b.ReleaseDate),
+                BookSorting.PriceAscending => booksQuery
+                    .OrderBy(b => b.Price),
+                BookSorting.PriceDescending => booksQuery
+                    .OrderByDescending(h => h.Price),
+                _ => booksQuery
+                    .OrderByDescending(b => b.NumberOfSales)
+                    .ThenBy(b => b.Title)
+            };
+
+            IEnumerable<BookAllViewModel> allBooks = await booksQuery
+                .Where(b => b.IsActive)
+                .Skip((queryModel.CurrentPage - 1) * queryModel.BookPerPage)
+                .Take(queryModel.BookPerPage)
+                .Select(b => new BookAllViewModel
+                {
+                    Id = b.Id.ToString(),
+                    Title = b.Title,
+                    Author = b.Author,
+                    ImageUrl = b.ImageUrl,
+                    Price = b.Price,
+                    AgeRestriction = b.AgeRestriction,
+                })
+                .ToArrayAsync();
+            int totalBooks = booksQuery.Count();
+
+            return new AllBooksFilteredAndPagedServiceModel()
+            {
+                TotalBooksCount = totalBooks,
+                Books = allBooks
+            };
+
         }
 
         public async Task<string> CreateAndReturnIdAsync(BookFormModel model, string managerId)
@@ -39,6 +102,7 @@ namespace BookShopSystem.Services.Data
         {
             IEnumerable<IndexViewModel> topTreeBooks = await this.dbContext
                 .Books
+                .Where(b => b.IsActive)
                 .OrderByDescending(b => b.NumberOfSales)
                 .ThenBy(b => b.ReleaseDate)
                 .Take(3)
