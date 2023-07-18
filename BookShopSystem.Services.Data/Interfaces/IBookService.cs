@@ -12,5 +12,6 @@ namespace BookShopSystem.Services.Data.Interfaces
         Task<AllBooksFilteredAndPagedServiceModel> AllAsync(AllBookQueryModel queryModel);
         Task<bool> ExistsByIdAsync(string bookId);
         Task<BookDetailsViewModel> GetDetailsByIdAsync(string bookId);
+        Task<bool> IsBoughtByUserWithIdAsync(string bookId, string userId);
     }
 }

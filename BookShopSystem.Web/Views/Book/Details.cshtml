@@ -1,12 +1,14 @@
-﻿@model BookDetailsViewModel
+﻿@using BookShopSystem.Services.Data.Interfaces;
+@using BookShopSystem.Web.Infrastructure.Extensions;
+@model BookDetailsViewModel
 
-@*@inject IManager AgentService
-@inject IHouseService HouseService
+@inject IManagerService ManagerService
+@inject IBookService BookService
 @{
-    bool isUserAgent = await AgentService.AgentExistsByUserIdAsync(this.User.GetId()!);
-    bool isAgentOwnerOfTheHouse = await AgentService.HasHouseWithIdAsync(this.User.GetId(), Model.Id);
-    bool isHouseRentedByUser = await HouseService.IsRentedByUserWithIdAsync(Model.Id, this.User.GetId()!);
-}*@
+    bool isUserManager = await ManagerService.ManagerExistsByUserIdAsync(this.User.GetId()!);
+    bool isManagerSellerOfTheBook = await ManagerService.HasBookWithIdAsync(this.User.GetId(), Model.Id);
+    bool isBookBoughtByUser = await BookService.IsBoughtByUserWithIdAsync(Model.Id, this.User.GetId()!);
+}
 
 @{
     ViewBag.Title = "Book Details";
@@ -33,22 +35,19 @@
             <p>Age Restriction: <b>@Model.AgeRestriction</b></p>
             <p>Number Of Sales: <b>@Model.NumberOfSales</b></p>
             <div class="form-inline">
-                @*@if (this.User.Identity?.IsAuthenticated ?? false)
+                @if (this.User.Identity?.IsAuthenticated ?? false)
                 {
-                    @if (isUserAgent && isAgentOwnerOfTheHouse)
+                    @if (isUserManager && isManagerSellerOfTheBook)
                     {
-                        <a class="btn btn-warning" asp-controller="House" asp-action="Edit"
-                   asp-route-id="@Model.Id">Edit</a>
-                        <a class="ml-2 btn btn-danger" asp-controller="House" asp-action="Delete"
-                   asp-route-id="@Model.Id">Delete</a>
+                        <a class="btn btn-warning" asp-controller="House" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+                        <a class="ml-2 btn btn-danger" asp-controller="House" asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
                     }
 
-                    @if (!Model.IsRented)
+                   @* @if (!Model.IsRented)
                     {
                         @if (!isUserAgent)
                         {
-                            <form class="ml-2" asp-controller="House"
-                      asp-action="Rent" asp-route-id="@Model.Id" method="post">
+                            <form class="ml-2" asp-controller="House" asp-action="Rent" asp-route-id="@Model.Id" method="post">
                                 <input class="btn btn-primary" type="submit" value="Rent" />
                             </form>
                         }
@@ -57,13 +56,12 @@
                     {
                         @if (!isUserAgent && isHouseRentedByUser)
                         {
-                            <form class="ml-2" asp-controller="House" asp-action="Leave"
-                      asp-route-id="@Model.Id" method="post">
+                            <form class="ml-2" asp-controller="House" asp-action="Leave" asp-route-id="@Model.Id" method="post">
                                 <input class="btn btn-primary" type="submit" value="Leave" />
                             </form>
                         }
-                    }
-                }*@
+                    }*@
+                }
             </div>
             <p></p>
             <div class="card" style="width: 18rem;">
