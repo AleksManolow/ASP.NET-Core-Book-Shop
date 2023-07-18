@@ -96,5 +96,37 @@ namespace BookShopSystem.Web.Controllers
                 return this.View(model);
             }
         }
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> Details(string id)
+        {
+            bool bookExists = await this.bookService
+                .ExistsByIdAsync(id);
+            if (!bookExists)
+            {
+                this.TempData[ErrorMessage] = "Book with the provided id does not exist!";
+
+                return this.RedirectToAction("All", "Book");
+            }
+
+            try
+            {
+                BookDetailsViewModel viewModel = await this.bookService
+                    .GetDetailsByIdAsync(id);
+
+                return View(viewModel);
+            }
+            catch (Exception)
+            {
+                return this.GeneralError();
+            }
+        }
+        private IActionResult GeneralError()
+        {
+            this.TempData[ErrorMessage] =
+                "Unexpected error occurred! Please try again later or contact administrator";
+
+            return this.RedirectToAction("Index", "Home");
+        }
     }
 }

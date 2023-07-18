@@ -5,6 +5,7 @@ using BookShopSystem.Services.Data.Models.Book;
 using BookShopSystem.Web.ViewModels.Book;
 using BookShopSystem.Web.ViewModels.Book.Enums;
 using BookShopSystem.Web.ViewModels.Home;
+using BookShopSystem.Web.ViewModels.Manager;
 using Microsoft.EntityFrameworkCore;
 
 namespace BookShopSystem.Services.Data
@@ -96,6 +97,47 @@ namespace BookShopSystem.Services.Data
             await dbContext.Books.AddAsync(newBook);
             await dbContext.SaveChangesAsync();
             return newBook.Id.ToString();
+        }
+
+        public async Task<bool> ExistsByIdAsync(string bookId)
+        {
+            bool result = await this.dbContext
+               .Books
+               .Where(h => h.IsActive)
+               .AnyAsync(h => h.Id.ToString() == bookId);
+
+            return result;
+        }
+
+        public async Task<BookDetailsViewModel> GetDetailsByIdAsync(string bookId)
+        {
+            Book book = await this.dbContext
+                .Books
+                .Include(h => h.Genre)
+                .Include(h => h.Manager)
+                .ThenInclude(a => a.User)
+                .Where(h => h.IsActive)
+                .FirstAsync(h => h.Id.ToString() == bookId);
+
+            return new BookDetailsViewModel
+            {
+                Id = book.Id.ToString(),
+                Title = book.Title,
+                Author = book.Author,
+                ImageUrl = book.ImageUrl,
+                Price = book.Price,
+                NumberOfSales = book.NumberOfSales,
+                Description = book.Description,
+                Genre = book.Genre.Name,
+                AgeRestriction = book.AgeRestriction,
+                Manager = new ManagerDetailsViewModel()
+                {
+                    FirstName = book.Manager.FirstName,
+                    LastName = book.Manager.LastName,
+                    Email = book.Manager.User.Email,
+                    PhoneNumber = book.Manager.PhoneNumber
+                }
+            };
         }
 
         public async Task<IEnumerable<IndexViewModel>> TopThreeSellingBooksAsync()
