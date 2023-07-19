@@ -200,5 +200,41 @@ namespace BookShopSystem.Services.Data
 
             await this.dbContext.SaveChangesAsync();
         }
+        public async Task<BookFormModel> GetBookForEditByIdAsync(string bookId)
+        {
+            Book book = await this.dbContext
+                .Books
+                .Include(b => b.Genre)
+                .Where(b => b.IsActive)
+                .FirstAsync(b => b.Id.ToString() == bookId);
+
+            return new BookFormModel
+            {
+                Title = book.Title,
+                Author = book.Author,
+                Description = book.Description,
+                ImageUrl = book.ImageUrl,
+                Price = book.Price,
+                GenreId = book.GenreId,
+                AgeRestriction = book.AgeRestriction,
+            };
+        }
+        public async Task EditBookByIdAndFormModelAsync(string bookId, BookFormModel formModel)
+        {
+            Book book = await this.dbContext
+                .Books
+                .Where(h => h.IsActive)
+                .FirstAsync(h => h.Id.ToString() == bookId);
+
+            book.Title = formModel.Title;
+            book.Author = formModel.Author;
+            book.Description = formModel.Description;
+            book.ImageUrl = formModel.ImageUrl;
+            book.Price = formModel.Price;
+            book.GenreId = formModel.GenreId;
+            book.AgeRestriction = formModel.AgeRestriction;
+
+            await this.dbContext.SaveChangesAsync();
+        }
     }
 }

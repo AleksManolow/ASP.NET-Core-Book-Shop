@@ -210,8 +210,107 @@ namespace BookShopSystem.Web.Controllers
                 return this.GeneralError();
             }
         }
+        [HttpGet]
+        public async Task<IActionResult> Edit(string id)
+        {
+            bool houseExists = await this.bookService
+                .ExistsByIdAsync(id);
+            if (!houseExists)
+            {
+                this.TempData[ErrorMessage] = "Book with the provided id does not exist!";
 
+                return this.RedirectToAction("All", "Book");
+            }
 
+            bool isUserManager = await this.managerService
+                .ManagerExistsByUserIdAsync(this.User.GetId()!);
+            if (!isUserManager)
+            {
+                this.TempData[ErrorMessage] = "You must become an manager in order to edit book info!";
+
+                return this.RedirectToAction("Become", "Manager");
+            }
+
+            string? managerId =
+                await this.managerService.GetManagerIdByUserIdAsync(this.User.GetId()!);
+            bool isManagerSaller = await this.bookService
+                .IsManagerWithIdSallerOfBookWithIdAsync(id, managerId!);
+            if (!isManagerSaller)
+            {
+                this.TempData[ErrorMessage] = "You must be the manager saller of the book you want to edit!";
+
+                return this.RedirectToAction("Mine", "Book");
+            }
+
+            try
+            {
+                BookFormModel formModel = await this.bookService
+                    .GetBookForEditByIdAsync(id);
+                formModel.Genries = await this.genreService.AllGenriesAsync();
+
+                return this.View(formModel);
+            }
+            catch (Exception)
+            {
+                return this.GeneralError();
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(string id, BookFormModel model)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                model.Genries = await this.genreService.AllGenriesAsync();
+
+                return this.View(model);
+            }
+
+            bool bookExists = await this.bookService
+                .ExistsByIdAsync(id);
+            if (!bookExists)
+            {
+                this.TempData[ErrorMessage] = "Book with the provided id does not exist!";
+
+                return this.RedirectToAction("All", "Book");
+            }
+
+            bool isUserManager = await this.managerService
+                .ManagerExistsByUserIdAsync(this.User.GetId()!);
+            if (!isUserManager)
+            {
+                this.TempData[ErrorMessage] = "You must become an manager in order to edit book info!";
+
+                return this.RedirectToAction("Become", "Manager");
+            }
+
+            string? managerId =
+                await this.managerService.GetManagerIdByUserIdAsync(this.User.GetId()!);
+            bool isManagerSaller = await this.bookService
+                .IsManagerWithIdSallerOfBookWithIdAsync(id, managerId!);
+            if (!isManagerSaller)
+            {
+                this.TempData[ErrorMessage] = "You must be the manager saller of the book you want to edit!";
+
+                return this.RedirectToAction("Mine", "Book");
+            }
+
+            try
+            {
+                await this.bookService.EditBookByIdAndFormModelAsync(id, model);
+            }
+            catch (Exception)
+            {
+                this.ModelState.AddModelError(string.Empty,
+                    "Unexpected error occurred while trying to update the book. Please try again later or contact administrator!");
+                model.Genries = await this.genreService.AllGenriesAsync();
+
+                return this.View(model);
+            }
+
+            this.TempData[SuccessMessage] = "Book was edited successfully!";
+            return this.RedirectToAction("Details", "Book", new { id });
+        }
         private IActionResult GeneralError()
         {
             this.TempData[ErrorMessage] =

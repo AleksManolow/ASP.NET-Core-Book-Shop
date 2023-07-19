@@ -16,5 +16,8 @@ namespace BookShopSystem.Services.Data.Interfaces
         Task<BookPreDeleteDetailsViewModel> GetBookForDeleteByIdAsync(string bookId);
         Task<bool> IsManagerWithIdSallerOfBookWithIdAsync(string bookId, string managerId);
         Task DeleteHouseByIdAsync(string bookId);
+        Task<BookFormModel> GetBookForEditByIdAsync(string bookId);
+        Task EditBookByIdAndFormModelAsync(string bookId, BookFormModel formModel);
+
     }
 }
