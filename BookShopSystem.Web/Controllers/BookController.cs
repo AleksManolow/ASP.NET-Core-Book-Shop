@@ -86,7 +86,7 @@ namespace BookShopSystem.Web.Controllers
                     await this.bookService.CreateAndReturnIdAsync(model, managerId);
 
                 this.TempData[SuccessMessage] = "Book was added successfully!";
-                return this.RedirectToAction("Details", "House", new { id = houseId });
+                return this.RedirectToAction("Details", "Book", new { id = houseId });
             }
             catch (Exception)
             {
@@ -121,6 +121,97 @@ namespace BookShopSystem.Web.Controllers
                 return this.GeneralError();
             }
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(string id)
+        {
+            bool bookExists = await this.bookService
+                .ExistsByIdAsync(id);
+            if (!bookExists)
+            {
+                this.TempData[ErrorMessage] = "Book with the provided id does not exist!";
+
+                return this.RedirectToAction("All", "Book");
+            }
+
+            bool isUserManager = await this.managerService
+                .ManagerExistsByUserIdAsync(this.User.GetId()!);
+            if (!isUserManager)
+            {
+                this.TempData[ErrorMessage] = "You must become an manager in order to edit book info!";
+
+                return this.RedirectToAction("Become", "Manger");
+            }
+
+            string? managerId =
+                await this.managerService.GetManagerIdByUserIdAsync(this.User.GetId()!);
+            bool isManagerSaller = await this.bookService
+                .IsManagerWithIdSallerOfBookWithIdAsync(id, managerId!);
+            if (!isManagerSaller)
+            {
+                this.TempData[ErrorMessage] = "You must be the manager saller of the book you want to edit!";
+
+                return this.RedirectToAction("Mine", "Book");
+            }
+
+            try
+            {
+                BookPreDeleteDetailsViewModel viewModel =
+                    await this.bookService.GetBookForDeleteByIdAsync(id);
+
+                return this.View(viewModel);
+            }
+            catch (Exception)
+            {
+                return this.GeneralError();
+            }
+        }
+        [HttpPost]
+        public async Task<IActionResult> Delete(string id, BookPreDeleteDetailsViewModel model)
+        {
+            bool bookExists = await this.bookService
+                .ExistsByIdAsync(id);
+            if (!bookExists)
+            {
+                this.TempData[ErrorMessage] = "Book with the provided id does not exist!";
+
+                return this.RedirectToAction("All", "Book");
+            }
+
+            bool isUserManager = await this.managerService
+                .ManagerExistsByUserIdAsync(this.User.GetId()!);
+            if (!isUserManager)
+            {
+                this.TempData[ErrorMessage] = "You must become an manager in order to edit book info!";
+
+                return this.RedirectToAction("Become", "Manager");
+            }
+
+            string? managerId =
+                await this.managerService.GetManagerIdByUserIdAsync(this.User.GetId()!);
+            bool isManagerSaller = await this.bookService
+                .IsManagerWithIdSallerOfBookWithIdAsync(id, managerId!);
+            if (!isManagerSaller)
+            {
+                this.TempData[ErrorMessage] = "You must be the manager saller of the book you want to edit!";
+
+                return this.RedirectToAction("Mine", "Book");
+            }
+
+            try
+            {
+                await this.bookService.DeleteHouseByIdAsync(id);
+
+                this.TempData[WarningMessage] = "The book was successfully deleted!";
+                return this.RedirectToAction("Mine", "Book");
+            }
+            catch (Exception)
+            {
+                return this.GeneralError();
+            }
+        }
+
+
         private IActionResult GeneralError()
         {
             this.TempData[ErrorMessage] =

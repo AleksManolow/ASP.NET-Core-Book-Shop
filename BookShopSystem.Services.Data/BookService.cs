@@ -167,5 +167,38 @@ namespace BookShopSystem.Services.Data
 
             return topTreeBooks;
         }
+        public async Task<bool> IsManagerWithIdSallerOfBookWithIdAsync(string bookId, string managerId)
+        {
+            Book book = await this.dbContext
+                .Books
+                .Where(h => h.IsActive)
+                .FirstAsync(h => h.Id.ToString() == bookId);
+
+            return book.ManagerId.ToString() == managerId;
+        }
+        public async Task<BookPreDeleteDetailsViewModel> GetBookForDeleteByIdAsync(string bookId)
+        {
+            Book book = await this.dbContext
+                .Books
+                .Where(b => b.IsActive)
+                .FirstAsync(b => b.Id.ToString() == bookId);
+
+            return new BookPreDeleteDetailsViewModel
+            {
+                Title = book.Title,
+                ImageUrl = book.ImageUrl
+            };
+        }
+        public async Task DeleteHouseByIdAsync(string bookId)
+        {
+            Book bookToDelete = await this.dbContext
+                .Books
+                .Where(h => h.IsActive)
+                .FirstAsync(h => h.Id.ToString() == bookId);
+
+            bookToDelete.IsActive = false;
+
+            await this.dbContext.SaveChangesAsync();
+        }
     }
 }
