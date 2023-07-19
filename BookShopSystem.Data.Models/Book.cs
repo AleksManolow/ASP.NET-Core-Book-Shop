@@ -60,5 +60,8 @@ namespace BookShopSystem.Data.Models
         [InverseProperty(nameof(Wish.Book))]
         public virtual ICollection<Wish> WishesBook { get; set; } = new List<Wish>();
 
+        [InverseProperty(nameof(CartItem.Book))]
+        public virtual ICollection<CartItem> CartBooks { get; set; } = new List<CartItem>();
+
     }
 }

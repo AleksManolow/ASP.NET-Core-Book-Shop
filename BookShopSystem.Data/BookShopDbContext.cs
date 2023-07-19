@@ -29,13 +29,13 @@ namespace BookShopSystem.Data
                 .Entity<Book>()
                 .Property(b => b.NumberOfSales)
                 .HasDefaultValue(0);
-               
+
 
             builder.Entity<Genre>()
                 .HasData(new Genre()
                 {
                     Id = 1,
-                    Name= "Fantasy",
+                    Name = "Fantasy",
                 },
                 new Genre()
                 {
@@ -79,7 +79,7 @@ namespace BookShopSystem.Data
                     Title = "Anna Karenina",
                     Author = "Leo Tolstoy",
                     Description = "Acclaimed by many as the world's greatest novel, Anna Karenina provides a vast panorama of contemporary life in Russia and of humanity in general.",
-                    ImageUrl = "https://data.logograph.com/resize/LyricTheatre/multimedia/Image/4561/Art%20Cinema%20April%20Webslug%20-%20Anna%20Karenina.jpg?width=1500",
+                    ImageUrl = "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1601352433i/15823480.jpg",
                     Price = 20,
                     AgeRestriction = 12,
                     ReleaseDate = DateTime.Parse("1877-06-26 10:57:31.1728595"),
@@ -131,6 +131,21 @@ namespace BookShopSystem.Data
                 .HasForeignKey(w => w.BookId)
                 .OnDelete(DeleteBehavior.NoAction);
 
+            builder.Entity<CartItem>()
+                .HasKey(c => new { c.UserId, c.BookId });
+
+            builder.Entity<CartItem>()
+                .HasOne(c => c.User)
+                .WithMany(g => g.BookCarts)
+                .HasForeignKey(p => p.UserId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<CartItem>()
+                .HasOne(c => c.Book)
+                .WithMany(u => u.CartBooks)
+                .HasForeignKey(p => p.BookId)
+                .OnDelete(DeleteBehavior.NoAction);
+
             base.OnModelCreating(builder);
         }
         public DbSet<Book> Books { get; init; } = null!;
@@ -138,6 +153,7 @@ namespace BookShopSystem.Data
         public DbSet<Manager> Managers { get; init; } = null!;
         public DbSet<Wish> Wishes { get; init; } = null!;
         public DbSet<Purchase> Purchases { get; init; } = null!;
+        public DbSet<CartItem> CartItems { get; init; } = null!;
 
     }
 }

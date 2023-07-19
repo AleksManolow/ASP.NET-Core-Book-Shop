@@ -4,6 +4,7 @@ using BookShopSystem.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookShopSystem.Data.Migrations
 {
     [DbContext(typeof(BookShopDbContext))]
-    partial class BookShopDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230719110115_CreateCartItem")]
+    partial class CreateCartItem
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -164,7 +166,7 @@ namespace BookShopSystem.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("82dbc3b9-fd7e-4fa2-b7a4-79b349e84c06"),
+                            Id = new Guid("20cfbb55-926d-46a9-86b4-be62ba555a0d"),
                             AgeRestriction = 12,
                             Author = "Leo Tolstoy",
                             Description = "Acclaimed by many as the world's greatest novel, Anna Karenina provides a vast panorama of contemporary life in Russia and of humanity in general.",
@@ -179,7 +181,7 @@ namespace BookShopSystem.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("dcd5bbf3-5bbf-412a-bf59-ad1b1478539a"),
+                            Id = new Guid("26641705-1ce9-4de4-b74e-a88c37d1639b"),
                             AgeRestriction = 16,
                             Author = "H.G. Wells",
                             Description = "The War of the Worlds by H.G. Wells is about a fictional invasion of Southern England by Martians. The military is powerless against the Martians' superior weapons, and many people die. The Martians are eventually killed by bacterial infection.",
@@ -206,7 +208,7 @@ namespace BookShopSystem.Data.Migrations
 
                     b.HasIndex("BookId");
 
-                    b.ToTable("CartItems");
+                    b.ToTable("CartItem");
                 });
 
             modelBuilder.Entity("BookShopSystem.Data.Models.Genre", b =>
