@@ -18,6 +18,8 @@ namespace BookShopSystem.Services.Data.Interfaces
         Task DeleteHouseByIdAsync(string bookId);
         Task<BookFormModel> GetBookForEditByIdAsync(string bookId);
         Task EditBookByIdAndFormModelAsync(string bookId, BookFormModel formModel);
+        Task<IEnumerable<BookAllViewModel>> AllByManagerIdAsync(string managerId);
+        Task<IEnumerable<BookAllViewModel>> AllByUserIdAsync(string userId);
 
     }
 }

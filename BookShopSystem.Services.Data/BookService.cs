@@ -236,5 +236,45 @@ namespace BookShopSystem.Services.Data
 
             await this.dbContext.SaveChangesAsync();
         }
+        public async Task<IEnumerable<BookAllViewModel>> AllByManagerIdAsync(string managerId)
+        {
+            IEnumerable<BookAllViewModel> allManagerBooks = await this.dbContext
+                .Books
+                .Where(b => b.IsActive &&
+                            b.ManagerId.ToString() == managerId)
+                .Select(b => new BookAllViewModel
+                {
+                    Id = b.Id.ToString(),
+                    Title = b.Title,
+                    Author = b.Author,
+                    ImageUrl = b.ImageUrl,
+                    Price = b.Price,
+                    AgeRestriction = b.AgeRestriction,
+                })
+                .ToArrayAsync();
+
+            return allManagerBooks;
+        }
+
+        public async Task<IEnumerable<BookAllViewModel>> AllByUserIdAsync(string userId)
+        {
+            IEnumerable<BookAllViewModel>allUserBooks = await this.dbContext
+               .Purchases
+               .Include(p => p.Book)
+               .Where(p => p.UserId.ToString() == userId)
+               .Select(p => new BookAllViewModel
+               {
+                   Id = p.Book.Id.ToString(),
+                   Title = p.Book.Title,
+                   Author = p.Book.Author,
+                   ImageUrl = p.Book.ImageUrl,
+                   Price = p.Book.Price,
+                   AgeRestriction = p.Book.AgeRestriction,
+               })
+               .ToArrayAsync();
+                
+            return allUserBooks;
+        }
+
     }
 }

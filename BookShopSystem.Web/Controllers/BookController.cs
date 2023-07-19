@@ -311,6 +311,38 @@ namespace BookShopSystem.Web.Controllers
             this.TempData[SuccessMessage] = "Book was edited successfully!";
             return this.RedirectToAction("Details", "Book", new { id });
         }
+
+        [HttpGet]
+        public async Task<IActionResult> MyLibrary()
+        {
+            List<BookAllViewModel> myBooks =
+                new List<BookAllViewModel>();
+
+            string userId = this.User.GetId()!;
+            bool isUserManager = await this.managerService
+                .ManagerExistsByUserIdAsync(userId);
+
+            try
+            {
+                if (isUserManager)
+                {
+                    string? managerId =
+                        await this.managerService.GetManagerIdByUserIdAsync(userId);
+
+                    myBooks.AddRange(await this.bookService.AllByManagerIdAsync(managerId!));
+                }
+                else
+                {
+                    myBooks.AddRange(await this.bookService.AllByUserIdAsync(userId));
+                }
+
+                return this.View(myBooks);
+            }
+            catch (Exception)
+            {
+                return this.GeneralError();
+            }
+        }
         private IActionResult GeneralError()
         {
             this.TempData[ErrorMessage] =
