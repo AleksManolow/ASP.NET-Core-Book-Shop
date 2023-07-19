@@ -167,7 +167,7 @@ namespace BookShopSystem.Services.Data
 
             return topTreeBooks;
         }
-        public async Task<bool> IsManagerWithIdSallerOfBookWithIdAsync(string bookId, string managerId)
+        public async Task<bool> IsManagerWithIdSellerOfBookWithIdAsync(string bookId, string managerId)
         {
             Book book = await this.dbContext
                 .Books

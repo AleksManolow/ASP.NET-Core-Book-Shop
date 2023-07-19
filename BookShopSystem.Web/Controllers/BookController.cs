@@ -145,9 +145,9 @@ namespace BookShopSystem.Web.Controllers
 
             string? managerId =
                 await this.managerService.GetManagerIdByUserIdAsync(this.User.GetId()!);
-            bool isManagerSaller = await this.bookService
-                .IsManagerWithIdSallerOfBookWithIdAsync(id, managerId!);
-            if (!isManagerSaller)
+            bool isManagerSeller = await this.bookService
+                .IsManagerWithIdSellerOfBookWithIdAsync(id, managerId!);
+            if (!isManagerSeller)
             {
                 this.TempData[ErrorMessage] = "You must be the manager saller of the book you want to edit!";
 
@@ -190,7 +190,7 @@ namespace BookShopSystem.Web.Controllers
             string? managerId =
                 await this.managerService.GetManagerIdByUserIdAsync(this.User.GetId()!);
             bool isManagerSaller = await this.bookService
-                .IsManagerWithIdSallerOfBookWithIdAsync(id, managerId!);
+                .IsManagerWithIdSellerOfBookWithIdAsync(id, managerId!);
             if (!isManagerSaller)
             {
                 this.TempData[ErrorMessage] = "You must be the manager saller of the book you want to edit!";
@@ -234,7 +234,7 @@ namespace BookShopSystem.Web.Controllers
             string? managerId =
                 await this.managerService.GetManagerIdByUserIdAsync(this.User.GetId()!);
             bool isManagerSaller = await this.bookService
-                .IsManagerWithIdSallerOfBookWithIdAsync(id, managerId!);
+                .IsManagerWithIdSellerOfBookWithIdAsync(id, managerId!);
             if (!isManagerSaller)
             {
                 this.TempData[ErrorMessage] = "You must be the manager saller of the book you want to edit!";
@@ -287,7 +287,7 @@ namespace BookShopSystem.Web.Controllers
             string? managerId =
                 await this.managerService.GetManagerIdByUserIdAsync(this.User.GetId()!);
             bool isManagerSaller = await this.bookService
-                .IsManagerWithIdSallerOfBookWithIdAsync(id, managerId!);
+                .IsManagerWithIdSellerOfBookWithIdAsync(id, managerId!);
             if (!isManagerSaller)
             {
                 this.TempData[ErrorMessage] = "You must be the manager saller of the book you want to edit!";
