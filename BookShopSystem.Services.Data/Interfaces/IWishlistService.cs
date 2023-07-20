@@ -6,6 +6,7 @@ namespace BookShopSystem.Services.Data.Interfaces
     {
         Task<bool> IsUserWithIdWishBookWithIdAsync(string bookId, string userId);
         Task AddToWishlistAsync(string bookId, string userId);
+        Task<IEnumerable<WishListViewModel>> WishlistByUserIdAsync(string userId);
 
         /* Task<bool> RemoveFromWishlistA(string userId, string bookId);
 

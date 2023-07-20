@@ -1,8 +1,10 @@
 ﻿using BookShopSystem.Data;
 using BookShopSystem.Data.Models;
 using BookShopSystem.Services.Data.Interfaces;
+using BookShopSystem.Web.ViewModels.Book;
 using BookShopSystem.Web.ViewModels.Wish;
 using Microsoft.EntityFrameworkCore;
+using static BookShopSystem.Common.EntityValidationConstants;
 
 namespace BookShopSystem.Services.Data
 {
@@ -27,6 +29,27 @@ namespace BookShopSystem.Services.Data
             };
             await this.dbContext.Wishes.AddAsync(wish);
             await this.dbContext.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<WishListViewModel>> WishlistByUserIdAsync(string userId)
+        {
+            IEnumerable<WishListViewModel> allUserBooksInWishlist = await this.dbContext
+                .Wishes
+                .Include(w => w.Book)
+                .Where(w => w.UserId.ToString() == userId)
+                .Select(w => new WishListViewModel
+                {
+                    Id = w.Book.Id.ToString(),
+                    Title = w.Book.Title,
+                    Author = w.Book.Author,
+                    ImageUrl = w.Book.ImageUrl,
+                    Price = w.Book.Price,
+                    AgeRestriction= w.Book.AgeRestriction,
+                })
+                .ToArrayAsync();
+        
+
+            return allUserBooksInWishlist;
         }
     }
 }

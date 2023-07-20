@@ -57,7 +57,7 @@ namespace BookShopSystem.Web.Controllers
                 await this.managerService.ManagerExistsByUserIdAsync(this.User.GetId()!);
             if (!isManager)
             {
-                this.TempData[ErrorMessage] = "You must become an manager in order to add new book!";
+                this.TempData[ErrorMessage] = "You must become a manager in order to add new book!";
 
                 return this.RedirectToAction("Become", "Manager");
             }
@@ -138,7 +138,7 @@ namespace BookShopSystem.Web.Controllers
                 .ManagerExistsByUserIdAsync(this.User.GetId()!);
             if (!isUserManager)
             {
-                this.TempData[ErrorMessage] = "You must become an manager in order to edit book info!";
+                this.TempData[ErrorMessage] = "You must become a manager in order to edit book info!";
 
                 return this.RedirectToAction("Become", "Manger");
             }
@@ -182,7 +182,7 @@ namespace BookShopSystem.Web.Controllers
                 .ManagerExistsByUserIdAsync(this.User.GetId()!);
             if (!isUserManager)
             {
-                this.TempData[ErrorMessage] = "You must become an manager in order to edit book info!";
+                this.TempData[ErrorMessage] = "You must become a manager in order to edit book info!";
 
                 return this.RedirectToAction("Become", "Manager");
             }
@@ -226,7 +226,7 @@ namespace BookShopSystem.Web.Controllers
                 .ManagerExistsByUserIdAsync(this.User.GetId()!);
             if (!isUserManager)
             {
-                this.TempData[ErrorMessage] = "You must become an manager in order to edit book info!";
+                this.TempData[ErrorMessage] = "You must become a manager in order to edit book info!";
 
                 return this.RedirectToAction("Become", "Manager");
             }
@@ -279,7 +279,7 @@ namespace BookShopSystem.Web.Controllers
                 .ManagerExistsByUserIdAsync(this.User.GetId()!);
             if (!isUserManager)
             {
-                this.TempData[ErrorMessage] = "You must become an manager in order to edit book info!";
+                this.TempData[ErrorMessage] = "You must become a manager in order to edit book info!";
 
                 return this.RedirectToAction("Become", "Manager");
             }

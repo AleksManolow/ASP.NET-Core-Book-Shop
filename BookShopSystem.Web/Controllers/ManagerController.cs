@@ -25,7 +25,7 @@ namespace BookShopSystem.Web.Controllers
 
             if (isAgent)
             {
-                this.TempData[ErrorMessage] = "You are already an manager!";
+                this.TempData[ErrorMessage] = "You are already a manager!";
 
                 return this.RedirectToAction("Index", "Home");
             }
@@ -56,9 +56,9 @@ namespace BookShopSystem.Web.Controllers
                 return this.View(model);
             }
 
-            bool userHasActiveRents = await this.managerService
+            bool userHasActivePurchases = await this.managerService
                 .HasBooksByUserIdAsync(userId);
-            if (userHasActiveRents)
+            if (userHasActivePurchases)
             {
                 this.TempData[ErrorMessage] = "You don't have to have books to become a manager!";
 
@@ -72,7 +72,7 @@ namespace BookShopSystem.Web.Controllers
             catch (Exception)
             {
                 this.TempData[ErrorMessage] =
-                    "Unexpected error occurred while registering you as an manager! Please try again later or contact administrator.";
+                    "Unexpected error occurred while registering you as a manager! Please try again later or contact administrator.";
 
                 return this.RedirectToAction("Index", "Home");
             }

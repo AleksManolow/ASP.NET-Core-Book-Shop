@@ -1,6 +1,7 @@
 ﻿using BookShopSystem.Services.Data;
 using BookShopSystem.Services.Data.Interfaces;
 using BookShopSystem.Web.Infrastructure.Extensions;
+using BookShopSystem.Web.ViewModels.Wish;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,10 +25,11 @@ namespace BookShopSystem.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> AddToWishlist(string bookId)
         {
-            bool bookExists = await this.bookService.ExistsByIdAsync(bookId);
+            bool bookExists = await this.bookService
+                .ExistsByIdAsync(bookId);
             if (!bookExists)
             {
-                this.TempData[ErrorMessage] = "Book with provided id does not exist! Please try again!";
+                this.TempData[ErrorMessage] = "Book with the provided id does not exist!";
 
                 return this.RedirectToAction("All", "Book");
             }
@@ -58,6 +60,31 @@ namespace BookShopSystem.Web.Controllers
                 TempData[SuccessMessage] = "Successfully added to wishlist!";
 
                 return this.RedirectToAction("MyWishlist", "Wishlist");
+            }
+            catch (Exception)
+            {
+                return this.GeneralError();
+            }
+        }
+        [HttpGet]
+        public async Task<IActionResult> MyWishlist()
+        {
+            bool isUserManager =
+                await this.managerService.ManagerExistsByUserIdAsync(this.User.GetId()!);
+            if (isUserManager)
+            {
+                this.TempData[ErrorMessage] = "Managers has no wishlist. Please register as a user!";
+
+                return this.RedirectToAction("Index", "Home");
+            }
+
+            List<WishListViewModel> myWishlist =
+                new List<WishListViewModel>();
+            try
+            {
+                myWishlist.AddRange(await this.wishlistService.WishlistByUserIdAsync(this.User.GetId()));
+ 
+                return this.View(myWishlist);
             }
             catch (Exception)
             {
