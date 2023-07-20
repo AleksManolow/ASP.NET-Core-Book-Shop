@@ -2,6 +2,7 @@
 {
     public interface ICartService
     {
-        public Task<bool> HasBookWithIdInCartAsync(string bookId, string userId);
+        public Task<bool> HasBookWithIdAndUserIdInCartAsync(string bookId, string userId);
+        public Task AddToCart(string bookId, string userId);
     }
 }
