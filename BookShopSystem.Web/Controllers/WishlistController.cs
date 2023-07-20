@@ -23,10 +23,10 @@ namespace BookShopSystem.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddToWishlist(string bookId)
+        public async Task<IActionResult> AddToWishlist(string id)
         {
             bool bookExists = await this.bookService
-                .ExistsByIdAsync(bookId);
+                .ExistsByIdAsync(id);
             if (!bookExists)
             {
                 this.TempData[ErrorMessage] = "Book with the provided id does not exist!";
@@ -35,7 +35,7 @@ namespace BookShopSystem.Web.Controllers
             }
 
             bool isUserWish = await this.wishlistService
-                .IsUserWithIdWishBookWithIdAsync(bookId, this.User.GetId());
+                .IsUserWithIdWishBookWithIdAsync(id, this.User.GetId());
             if (isUserWish)
             {
                 this.TempData[ErrorMessage] =
@@ -55,7 +55,7 @@ namespace BookShopSystem.Web.Controllers
 
             try
             {
-                await this.wishlistService.AddToWishlistAsync(bookId, this.User.GetId()!);
+                await this.wishlistService.AddToWishlistAsync(id, this.User.GetId()!);
 
                 TempData[SuccessMessage] = "Successfully added to wishlist!";
 

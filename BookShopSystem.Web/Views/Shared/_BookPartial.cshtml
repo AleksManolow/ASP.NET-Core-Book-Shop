@@ -14,8 +14,8 @@
             <br />
             <a asp-controller="Book" asp-action="Details" asp-route-id="@Model.Id"
                class="btn btn-success">Details</a>
-            <form class="input-group-sm" asp-controller="Wishlist" asp-action="AddToWishlist" asp-route-id="@Model.Id" method="post">
-                  <input class="btn btn-danger" type="submit" value="Add To Wish" />
+            <form class="ml-2" asp-controller="Wishlist" asp-action="AddToWishlist" asp-route-id="@Model.Id" method="post">
+                  <input class="btn btn-primary" type="submit" value="Add To Wishlist" />
             </form>
         </div>
     </div>
