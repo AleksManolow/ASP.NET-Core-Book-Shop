@@ -51,5 +51,14 @@ namespace BookShopSystem.Services.Data
 
             return allUserBooksInWishlist;
         }
+
+        public async Task RemoveFromWishlistAsync(string bookId, string userId)
+        {
+            var removeWish = await dbContext.Wishes.Where(w => w.UserId.ToString() == userId && w.BookId.ToString() == bookId)
+                .FirstOrDefaultAsync();
+
+            dbContext.Wishes.Remove(removeWish!);
+            await dbContext.SaveChangesAsync();
+        }
     }
 }

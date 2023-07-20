@@ -4,7 +4,7 @@ using BookShopSystem.Web.Infrastructure.Extensions;
 using BookShopSystem.Web.ViewModels.Wish;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using static BookShopSystem.Common.NotificationMessagesConstants;
 
 namespace BookShopSystem.Web.Controllers
@@ -90,6 +90,50 @@ namespace BookShopSystem.Web.Controllers
             {
                 return this.GeneralError();
             }
+        }
+        [HttpPost]
+        public async Task<IActionResult> RemoveFromWishlist(string id)
+        {
+            bool bookExists = await this.bookService
+                .ExistsByIdAsync(id);
+            if (!bookExists)
+            {
+                this.TempData[ErrorMessage] = "Book with the provided id does not exist!";
+
+                return this.RedirectToAction("All", "Book");
+            }
+
+            bool isUserWish = await this.wishlistService
+                .IsUserWithIdWishBookWithIdAsync(id, this.User.GetId());
+            if (!isUserWish)
+            {
+                this.TempData[ErrorMessage] = "The selected book not on this user's wishlist!";
+
+                return this.RedirectToAction("All", "Book");
+            }
+
+            bool isUserManager =
+                await this.managerService.ManagerExistsByUserIdAsync(this.User.GetId()!);
+            if (isUserManager)
+            {
+                this.TempData[ErrorMessage] = "Managers can't remove from wishlist books. Please register as a user!";
+
+                return this.RedirectToAction("Index", "Home");
+            }
+
+            try
+            {
+                await this.wishlistService.RemoveFromWishlistAsync(id, this.User.GetId()!);
+
+                TempData[SuccessMessage] = "Successfully removed from wishlist!";
+
+                return this.RedirectToAction("MyWishlist", "Wishlist");
+            }
+            catch (Exception)
+            {
+                return this.GeneralError();
+            }
+
         }
         private IActionResult GeneralError()
         {
