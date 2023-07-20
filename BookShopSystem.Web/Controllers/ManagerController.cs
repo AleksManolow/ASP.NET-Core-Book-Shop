@@ -72,7 +72,7 @@ namespace BookShopSystem.Web.Controllers
             catch (Exception)
             {
                 this.TempData[ErrorMessage] =
-                    "Unexpected error occurred while registering you as a manager! Please try again later or contact administrator.";
+                    "Unexpected error occurred while registering you as a manager! Please try manager later or contact administrator.";
 
                 return this.RedirectToAction("Index", "Home");
             }

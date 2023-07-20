@@ -14,8 +14,11 @@
             <br />
             <a asp-controller="Book" asp-action="Details" asp-route-id="@Model.Id"
                class="btn btn-success">Details</a>
+            <form class="ml-2" asp-controller="Wishlist" asp-action="MoveToCart" asp-route-id="@Model.Id" method="post">
+                <input class="btn btn-success" type="submit" value="Move To Cart" />
+            </form>
             <form class="ml-2" asp-controller="Wishlist" asp-action="RemoveFromWishlist" asp-route-id="@Model.Id" method="post">
-                  <input class="btn btn-primary" type="submit" value="Remove From Wishlist" />
+                <input class="btn btn-danger" type="submit" value="Remove" />
             </form>
         </div>
     </div>
