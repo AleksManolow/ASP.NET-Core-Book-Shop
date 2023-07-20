@@ -19,7 +19,7 @@ namespace BookShopSystem.Web.Controllers
         {
             this.bookService = bookService;  
             this.genreService = genreService;
-            this.managerService = managerService;   
+            this.managerService = managerService;
         }
 
         [HttpGet]
@@ -149,7 +149,7 @@ namespace BookShopSystem.Web.Controllers
                 .IsManagerWithIdSellerOfBookWithIdAsync(id, managerId!);
             if (!isManagerSeller)
             {
-                this.TempData[ErrorMessage] = "You must be the manager saller of the book you want to edit!";
+                this.TempData[ErrorMessage] = "You must be the manager seller of the book you want to edit!";
 
                 return this.RedirectToAction("Mine", "Book");
             }
@@ -193,7 +193,7 @@ namespace BookShopSystem.Web.Controllers
                 .IsManagerWithIdSellerOfBookWithIdAsync(id, managerId!);
             if (!isManagerSaller)
             {
-                this.TempData[ErrorMessage] = "You must be the manager saller of the book you want to edit!";
+                this.TempData[ErrorMessage] = "You must be the manager seller of the book you want to edit!";
 
                 return this.RedirectToAction("Mine", "Book");
             }
@@ -237,7 +237,7 @@ namespace BookShopSystem.Web.Controllers
                 .IsManagerWithIdSellerOfBookWithIdAsync(id, managerId!);
             if (!isManagerSaller)
             {
-                this.TempData[ErrorMessage] = "You must be the manager saller of the book you want to edit!";
+                this.TempData[ErrorMessage] = "You must be the manager seller of the book you want to edit!";
 
                 return this.RedirectToAction("Mine", "Book");
             }
@@ -290,7 +290,7 @@ namespace BookShopSystem.Web.Controllers
                 .IsManagerWithIdSellerOfBookWithIdAsync(id, managerId!);
             if (!isManagerSaller)
             {
-                this.TempData[ErrorMessage] = "You must be the manager saller of the book you want to edit!";
+                this.TempData[ErrorMessage] = "You must be the manager seller of the book you want to edit!";
 
                 return this.RedirectToAction("Mine", "Book");
             }
