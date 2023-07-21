@@ -51,5 +51,14 @@ namespace BookShopSystem.Services.Data
 
             return allUserBooksInCart;
         }
+
+        public async Task RemoveFromCartAsync(string bookId, string userId)
+        {
+            var removeCartItem = await dbContext.CartItems.Where(w => w.UserId.ToString() == userId && w.BookId.ToString() == bookId)
+                .FirstOrDefaultAsync();
+
+            dbContext.CartItems.Remove(removeCartItem!);
+            await dbContext.SaveChangesAsync();
+        }
     }
 }
