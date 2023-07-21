@@ -21,7 +21,7 @@
                                 <b>@($"{Model.Price:f2}") BGN</b>
                             </p>
                             <p class="card-text">Age Restriction: <b>@Model.AgeRestriction</b></p>
-                            <div class="mb-2">
+                            <div class="d-flex justify-content-between mb-2">
                                 <a asp-controller="Book" asp-action="Details" asp-route-id="@Model.Id" class="btn btn-success mr-2" aria-label="Details">
                                     <span aria-hidden="true">📕</span> Details
                                 </a>
