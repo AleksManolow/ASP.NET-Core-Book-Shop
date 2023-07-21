@@ -13,12 +13,14 @@ namespace BookShopSystem.Web.Controllers
         public readonly ICartService cartService;
         public readonly IBookService bookService;
         public readonly IManagerService managerService;
+        public readonly IWishlistService wishlistService;
 
-        public CartController(ICartService cartService, IBookService bookService, IManagerService managerService)
+        public CartController(ICartService cartService, IBookService bookService, IManagerService managerService, IWishlistService wishlistService)
         {
             this.cartService = cartService;
             this.bookService = bookService;
             this.managerService = managerService;
+            this.wishlistService = wishlistService;
         }
 
         public async Task<IActionResult> MyCart() 
@@ -39,6 +41,49 @@ namespace BookShopSystem.Web.Controllers
                 myCart.AddRange(await this.cartService.CartByUserIdAsync(this.User.GetId()));
 
                 return this.View(myCart);
+            }
+            catch (Exception)
+            {
+                return this.GeneralError();
+            }
+        }
+        [HttpPost]
+        public async Task<IActionResult> RemoveFromCart(string id)
+        {
+            bool bookExists = await this.bookService
+                .ExistsByIdAsync(id);
+            if (!bookExists)
+            {
+                this.TempData[ErrorMessage] = "Book with the provided id does not exist!";
+
+                return this.RedirectToAction("All", "Book");
+            }
+
+            bool isUserWish = await this.cartService
+                .HasBookWithIdAndUserIdInCartAsync(id, this.User.GetId());
+            if (!isUserWish)
+            {
+                this.TempData[ErrorMessage] = "The selected book not on this user's cart!";
+
+                return this.RedirectToAction("All", "Book");
+            }
+
+            bool isUserManager =
+                await this.managerService.ManagerExistsByUserIdAsync(this.User.GetId()!);
+            if (isUserManager)
+            {
+                this.TempData[ErrorMessage] = "Managers can't remove from cart books. Please register as a user!";
+
+                return this.RedirectToAction("Index", "Home");
+            }
+
+            try
+            {
+                await this.cartService.RemoveFromCartAsync(id, this.User.GetId()!);
+
+                TempData[SuccessMessage] = "Successfully removed from cart!";
+
+                return this.RedirectToAction("MyCart", "Cart");
             }
             catch (Exception)
             {
