@@ -1,0 +1,22 @@
+﻿@model CartViewModel
+
+<div class="col-md-4">
+    <div class="card mb-3">
+        <img class="card-img-top" src="@Model.ImageUrl" alt="Book Image">
+        <div class="card-body text-center">
+            <h4>@Model.Title</h4>
+            <h6>Author: <b>@Model.Author</b></h6>
+            <h6>
+                Price:
+                <b>@($"{Model.Price:f2}") BGN</b>
+            </h6>
+            <h6>Age Restriction: <b>@Model.AgeRestriction</b></h6>
+            <br />
+            @*<a asp-controller="Book" asp-action="Details" asp-route-id="@Model.Id"
+               class="btn btn-success">Details</a>*@
+            <form class="ml-2" asp-controller="Cart" asp-action="RemoveFromCart" asp-route-id="@Model.Id" method="post">
+                <input class="btn btn-danger" type="submit" value="Remove" />
+            </form>
+        </div>
+    </div>
+</div>

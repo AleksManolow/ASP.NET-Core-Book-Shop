@@ -1,9 +1,10 @@
 ﻿using BookShopSystem.Data;
 using BookShopSystem.Data.Models;
 using BookShopSystem.Services.Data.Interfaces;
+using BookShopSystem.Web.ViewModels.Cart;
 using Microsoft.EntityFrameworkCore;
 
-namespace BookShopSystem.Services.Data 
+namespace BookShopSystem.Services.Data
 {
     public class CartService : ICartService
     {
@@ -28,6 +29,27 @@ namespace BookShopSystem.Services.Data
 
             await this.dbContext.CartItems.AddAsync(item);
             await dbContext.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<CartViewModel>> CartByUserIdAsync(string userId)
+        {
+            IEnumerable<CartViewModel> allUserBooksInCart = await this.dbContext
+                .CartItems
+                .Include(c => c.Book)
+                .Where(c => c.UserId.ToString() == userId)
+                .Select(c => new CartViewModel
+                {
+                    Id = c.Book.Id.ToString(),
+                    Title = c.Book.Title,
+                    Author = c.Book.Author,
+                    ImageUrl = c.Book.ImageUrl,
+                    Price = c.Book.Price,
+                    AgeRestriction = c.Book.AgeRestriction,
+                })
+                .ToArrayAsync();
+
+
+            return allUserBooksInCart;
         }
     }
 }
