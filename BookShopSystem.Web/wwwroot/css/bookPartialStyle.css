@@ -5,9 +5,9 @@
     transition: box-shadow 0.3s ease;
 }
 
-    .card:hover {
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    }
+.card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
 
 .card-img-top {
     border-radius: 8px 8px 0 0;
@@ -44,17 +44,17 @@ h6 {
     border-color: #28a745;
 }
 
-    .btn-success:hover {
-        background-color: #218838;
-        border-color: #218838;
-    }
+.btn-success:hover {
+    background-color: #218838;
+    border-color: #218838;
+}
 
 .btn-primary {
     background-color: #007bff;
     border-color: #007bff;
 }
 
-    .btn-primary:hover {
-        background-color: #0056b3;
-        border-color: #0056b3;
-    }
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
