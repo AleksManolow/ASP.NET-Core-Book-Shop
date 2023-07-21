@@ -1,0 +1,75 @@
+﻿/* Стилове за картата */
+.card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Стилове за снимката */
+.card-img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px 0 0 8px;
+}
+
+/* Стилове за съдържанието на картата */
+.card-body {
+    padding: 11px;
+}
+
+.card-title {
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.card-text {
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+}
+
+/* Стилове за бутоните */
+.btn {
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-success {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+/* Стилове за иконите */
+.btn span {
+    display: inline-block;
+    margin-right: 5px;
+}
+
+/* Подравняване на съдържанието във формите */
+form {
+    display: inline-block;
+    margin: 0;
+}
+
+/* Подравняване на бутоните */
+.d-flex .btn {
+    flex: 1;
+}
+
+/* Допълнителни стилове */
+.mb-2 {
+    margin-bottom: 10px;
+}
+
+.ml-2 {
+    margin-left: 10px;
+}
+
+.mr-2 {
+    margin-right: 10px;
+}
