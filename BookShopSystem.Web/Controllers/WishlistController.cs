@@ -46,6 +46,16 @@ namespace BookShopSystem.Web.Controllers
                 return this.RedirectToAction("All", "Book");
             }
 
+            bool isUserCart = await this.cartService
+                .HasBookWithIdAndUserIdInCartAsync(id, this.User.GetId());
+            if (isUserCart)
+            {
+                this.TempData[ErrorMessage] =
+                    "Selected book is already add to cart by you! You can just buy it.";
+
+                return this.RedirectToAction("MyCart", "Cart");
+            }
+
             bool isUserManager =
                 await this.managerService.ManagerExistsByUserIdAsync(this.User.GetId()!);
             if (isUserManager)
@@ -61,7 +71,7 @@ namespace BookShopSystem.Web.Controllers
 
                 TempData[SuccessMessage] = "Successfully added to wishlist!";
 
-                return this.RedirectToAction("MyWishlist", "Wishlist");
+                return this.RedirectToAction("All", "Book");
             }
             catch (Exception)
             {

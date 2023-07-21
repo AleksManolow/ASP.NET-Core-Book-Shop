@@ -58,8 +58,8 @@ namespace BookShopSystem.Services.Data
 
             IEnumerable<BookAllViewModel> allBooks = await booksQuery
                 .Where(b => b.IsActive)
-                .Skip((queryModel.CurrentPage - 1) * queryModel.BookPerPage)
-                .Take(queryModel.BookPerPage)
+                .Skip((queryModel.CurrentPage - 1) * queryModel.BooksPerPage)
+                .Take(queryModel.BooksPerPage)
                 .Select(b => new BookAllViewModel
                 {
                     Id = b.Id.ToString(),

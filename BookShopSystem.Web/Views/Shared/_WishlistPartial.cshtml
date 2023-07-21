@@ -1,6 +1,6 @@
 ﻿@model WishListViewModel
 
-<div class="col-md-4">
+@*<div class="col-md-4">
     <div class="card mb-3">
         <img class="card-img-top" src="@Model.ImageUrl" alt="Book Image">
         <div class="card-body text-center">
@@ -22,4 +22,43 @@
             </form>
         </div>
     </div>
+</div>*@
+<div class="col-md-4">
+    <div class="card shadow">
+        <div class="row no-gutters">
+            <div class="col-md-5">
+                <img class="card-img" src="@Model.ImageUrl" alt="Book Image">
+            </div>
+            <div class="col-md-7">
+                <div class="card-body">
+                    <h4 class="card-title">@Model.Title</h4>
+                    <p class="card-text">Author: <b>@Model.Author</b></p>
+                    <p class="card-text">
+                        Price:
+                        <b>@($"{Model.Price:f2}") BGN</b>
+                    </p>
+                    <p class="card-text">Age Restriction: <b>@Model.AgeRestriction</b></p>
+                    <div class="d-flex justify-content-between mb-2">
+                        <a asp-controller="Book" asp-action="Details" asp-route-id="@Model.Id"
+                           class="btn btn-primary">Details</a>
+                        <form asp-controller="Wishlist" asp-action="MoveToCart" asp-route-id="@Model.Id" method="post">
+                            <button class="btn btn-success" type="submit">Move To Cart</button>
+                        </form>
+                    </div>
+                    <form class="ml-2" asp-controller="Wishlist" asp-action="RemoveFromWishlist" asp-route-id="@Model.Id" method="post">
+                        <button class="btn btn-danger ml-2" type="submit">Remove</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+
+
+
+
+
+
+
+

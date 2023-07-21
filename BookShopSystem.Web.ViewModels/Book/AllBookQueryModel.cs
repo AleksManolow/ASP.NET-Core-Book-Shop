@@ -10,7 +10,7 @@ namespace BookShopSystem.Web.ViewModels.Book
         public AllBookQueryModel()
         {
             this.CurrentPage = DefaultPage;
-            this.BookPerPage = EntitiesPerPage;
+            this.BooksPerPage = EntitiesPerPage;
 
             this.Genries = new HashSet<string>();
             this.Books = new HashSet<BookAllViewModel>();
@@ -25,7 +25,7 @@ namespace BookShopSystem.Web.ViewModels.Book
 
         public int CurrentPage { get; set; }
         [Display(Name = "Show Book On Page")]
-        public int BookPerPage { get; set; }
+        public int BooksPerPage { get; set; }
 
         public int TotalBooks { get; set; }
 
