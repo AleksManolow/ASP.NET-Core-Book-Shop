@@ -41,7 +41,7 @@ namespace BookShopSystem.Web.Controllers
             if (isUserWish)
             {
                 this.TempData[ErrorMessage] =
-                    "Selected book is already add to wishlist by another user! Please select another book.";
+                    "Selected book is already add to wishlist by you! Please select another book.";
 
                 return this.RedirectToAction("All", "Book");
             }
@@ -181,7 +181,7 @@ namespace BookShopSystem.Web.Controllers
             try
             {
                 await this.wishlistService.RemoveFromWishlistAsync(id, this.User.GetId()!);
-                await this.cartService.AddToCart(id, this.User.GetId()!);
+                await this.cartService.AddToCartAsync(id, this.User.GetId()!);
 
                 TempData[SuccessMessage] = "Successfully move to cart!";
 

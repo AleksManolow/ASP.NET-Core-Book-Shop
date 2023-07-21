@@ -19,7 +19,7 @@ namespace BookShopSystem.Services.Data
         {
             return await dbContext.CartItems.AnyAsync(w => w.UserId.ToString() == userId && w.BookId.ToString() == bookId);
         }
-        public async Task AddToCart(string bookId, string userId)
+        public async Task AddToCartAsync(string bookId, string userId)
         {
             CartItem item = new CartItem()
             {

@@ -2,12 +2,14 @@
 using BookShopSystem.Web.Infrastructure.Extensions;
 using BookShopSystem.Web.ViewModels.Cart;
 using BookShopSystem.Web.ViewModels.Wish;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 using static BookShopSystem.Common.NotificationMessagesConstants;
 
 namespace BookShopSystem.Web.Controllers
 {
+    [Authorize]
     public class CartController : Controller
     {
         public readonly ICartService cartService;
@@ -22,7 +24,7 @@ namespace BookShopSystem.Web.Controllers
             this.managerService = managerService;
             this.wishlistService = wishlistService;
         }
-
+        [HttpGet]
         public async Task<IActionResult> MyCart() 
         {
             bool isUserManager =
@@ -59,9 +61,9 @@ namespace BookShopSystem.Web.Controllers
                 return this.RedirectToAction("All", "Book");
             }
 
-            bool isUserWish = await this.cartService
+            bool isUserCart = await this.cartService
                 .HasBookWithIdAndUserIdInCartAsync(id, this.User.GetId());
-            if (!isUserWish)
+            if (!isUserCart)
             {
                 this.TempData[ErrorMessage] = "The selected book not on this user's cart!";
 
@@ -82,6 +84,55 @@ namespace BookShopSystem.Web.Controllers
                 await this.cartService.RemoveFromCartAsync(id, this.User.GetId()!);
 
                 TempData[SuccessMessage] = "Successfully removed from cart!";
+
+                return this.RedirectToAction("MyCart", "Cart");
+            }
+            catch (Exception)
+            {
+                return this.GeneralError();
+            }
+        }
+        [HttpPost]
+        public async Task<IActionResult> AddToCart(string id)
+        {
+            bool bookExists = await this.bookService
+                .ExistsByIdAsync(id);
+            if (!bookExists)
+            {
+                this.TempData[ErrorMessage] = "Book with the provided id does not exist!";
+
+                return this.RedirectToAction("All", "Book");
+            }
+
+            bool isUserCart = await this.cartService
+                .HasBookWithIdAndUserIdInCartAsync(id, this.User.GetId());
+            if (isUserCart)
+            {
+                this.TempData[ErrorMessage] =
+                    "Selected book is already add to cart by you! Please select another book.";
+
+                return this.RedirectToAction("All", "Book");
+            }
+
+            bool isUserManager =
+                await this.managerService.ManagerExistsByUserIdAsync(this.User.GetId()!);
+            if (isUserManager)
+            {
+                this.TempData[ErrorMessage] = "Managers can't add to cart books. Please register as a user!";
+
+                return this.RedirectToAction("Index", "Home");
+            }
+
+            try
+            {
+                if (await this.wishlistService.IsUserWithIdWishBookWithIdAsync(id, this.User.GetId()))
+                {
+                    await this.wishlistService.RemoveFromWishlistAsync(id, this.User.GetId()!);
+                }
+
+                await this.cartService.AddToCartAsync(id, this.User.GetId()!);
+
+                TempData[SuccessMessage] = "Successfully added to cart!";
 
                 return this.RedirectToAction("MyCart", "Cart");
             }
