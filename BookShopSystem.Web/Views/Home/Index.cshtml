@@ -65,14 +65,75 @@
     </div>
 </div>
 
-<div class="mt-4 p-5 bg-light d-none" id="statistics_box">
-    <div class="row">
-        <h2 class="col-md-6 text-center" id="total_books"></h2>
-        <h2 class="col-md-6 text-center" id="total_buy"></h2>
-    </div>
+<div class="mt-3 p-2 d-none" id="statistics_box">
+   <h2 class="text-center text-white" id="total_Purchases"></h2>
+</div>
+
+<div style="position: relative;width: 100%;height: 50vh;">
+    <canvas id="myChart" style="width:100%;max-width:500px;height:100%;max-height:600px;position:absolute;top:50%;left:50%;transform:translate(-50%, -50%)"></canvas>
 </div>
 
 @section Scripts
 {
-    <script>statistics();</script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        $('#statistics_btn').on('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            if ($('#statistics_box').hasClass('d-none')) {
+                $.get('https://localhost:7084/api/statistics', function (data) {
+                    $('#total_Purchases').text("Total Purchases: " +data.totalPurchases);
+                    // Създаване на кръговата диаграма
+                    var ctx = document.getElementById('myChart').getContext('2d');
+                    var myChart = new Chart(ctx, {
+                        type: 'pie',
+                        data: {
+                            labels: ['Total Fantasy Purchases', 'Total Sci-Fi Purchases', 'Total Mystery Purchases', 'Total Thriller Purchases',
+                                'Total Romance Purchases', 'Total Westerns Purchases', 'Total Dystopian Purchases', 'Total Contemporary Purchases',],
+                            datasets: [{
+                                label: 'Statistics',
+                                data: [data.totalFantasyPurchases, data.totalSciFiPurchases, data.totalMysteryPurchases, data.totalThrillerPurchases
+                                    , data.totalRomancePurchases, data.totalWesternsPurchases, data.totalDystopianPurchases, data.totalContemporaryPurchases],
+                                backgroundColor: ['rgba(75, 192, 192, 0.2)',
+                                                  'rgba(153, 102, 255, 0.2)',
+                                                  'rgba(255, 159, 64, 0.2)',
+                                                  'rgba(255, 99, 132, 0.2)',
+                                                  'rgba(54, 162, 235, 0.2)',
+                                                  'rgba(255, 206, 86, 0.2)',
+                                                  'rgba(75, 192, 192, 0.2)',
+                                                  'rgba(153, 102, 255, 0.2)'],
+                                borderColor: ['rgba(75, 192, 192, 1)',
+                                              'rgba(153, 102, 255, 1)',
+                                              'rgba(255, 159, 64, 1)',
+                                              'rgba(255, 99, 132, 1)',
+                                              'rgba(54, 162, 235, 1)',
+                                              'rgba(255, 206, 86, 1)',
+                                              'rgba(75, 192, 192, 1)',
+                                              'rgba(153, 102, 255, 1)'],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            
+                        }
+                    });
+
+                    $('#statistics_box').removeClass('d-none');
+                    $('#myChart').removeClass('d-none');
+
+                    $('#statistics_btn').text('Hide Statistics');
+                    $('#statistics_btn').removeClass('btn-primary');
+                    $('#statistics_btn').addClass('btn-danger');
+                });
+            } else {
+                $('#statistics_box').addClass('d-none');
+                $('#myChart').addClass('d-none');
+
+                $('#statistics_btn').text('Show Statistics');
+                $('#statistics_btn').removeClass('btn-danger');
+                $('#statistics_btn').addClass('btn-primary');
+            }
+        });
+    </script>
 }
