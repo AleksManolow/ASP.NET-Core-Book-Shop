@@ -1,29 +1,15 @@
-﻿@model BookAllViewModel
+﻿@using BookShopSystem.Services.Data.Interfaces;
+@using BookShopSystem.Web.Infrastructure.Extensions;
+@model BookAllViewModel
 
-@*<div class="col-md-4">
-    <div class="card mb-3">
-        <img class="card-img-top" src="@Model.ImageUrl" alt="Book Image">
-        <div class="card-body text-center">
-            <h4>@Model.Title</h4>
-            <h6>Author: <b>@Model.Author</b></h6>
-            <h6>
-                Price:
-                <b>@($"{Model.Price:f2}") BGN</b>
-            </h6>
-            <h6>Age Restriction: <b>@Model.AgeRestriction</b></h6>
-            <br />
-            <a asp-controller="Book" asp-action="Details" asp-route-id="@Model.Id"
-               class="btn btn-success">Details</a>
-            <form class="ml-2" asp-controller="Wishlist" asp-action="AddToWishlist" asp-route-id="@Model.Id" method="post">
-                  <input class="btn btn-primary" type="submit" value="Add To Wishlist" />
-            </form>
-            <form class="ml-2" asp-controller="Cart" asp-action="AddToCart" asp-route-id="@Model.Id" method="post">
-                <input class="btn btn-success" type="submit" value="Add To Cart" />
-            </form>
-        </div>
-    </div>
-</div>
-*@
+@inject IManagerService ManagerService
+@inject IBookService BookService
+@{
+    bool isUserManager = await ManagerService.ManagerExistsByUserIdAsync(this.User.GetId()!);
+    bool isManagerSellerOfTheBook = await ManagerService.HasBookWithIdAsync(this.User.GetId(), Model.Id);
+    bool isBookBoughtByUser = await BookService.IsBoughtByUserWithIdAsync(Model.Id, this.User.GetId()!);
+}
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -43,16 +29,32 @@
                         <a asp-controller="Book" asp-action="Details" asp-route-id="@Model.Id" class="btn btn-success mr-2" aria-label="Details">
                             <span aria-hidden="true">📕</span> Details
                         </a>
-                        <form class="ml-2" asp-controller="Cart" asp-action="AddToCart" asp-route-id="@Model.Id" method="post">
-                            <button type="submit" class="btn btn-success" aria-label="Add To Cart">
-                                <span aria-hidden="true">🛒</span> Add To Cart
-                            </button>
-                        </form>
-                        <form class="ml-2" asp-controller="Wishlist" asp-action="AddToWishlist" asp-route-id="@Model.Id" method="post">
-                            <button type="submit" class="btn btn-primary" aria-label="Add To Wishlist">
-                                <span aria-hidden="true">❤</span> Wish
-                            </button>
-                        </form>
+                        @if(this.User.Identity?.IsAuthenticated ?? false)
+                        {
+                            @if(isUserManager && isManagerSellerOfTheBook)
+                            {
+                                <a asp-controller="Book" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning mr-2" aria-label="Edit">
+                                    <span aria-hidden="true">✏️</span> Edit
+                                </a>
+                                <a asp-controller="Book" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger mr-2" aria-label="Delete">
+                                    <span aria-hidden="true">❌</span> Delete
+                                </a>
+                            }
+
+                            @if(!isBookBoughtByUser && !isUserManager)
+                            {
+                                <form class="ml-2" asp-controller="Cart" asp-action="AddToCart" asp-route-id="@Model.Id" method="post">
+                                    <button type="submit" class="btn btn-success" aria-label="Add To Cart">
+                                        <span aria-hidden="true">🛒</span> Add To Cart
+                                    </button>
+                                </form>
+                                <form class="ml-2" asp-controller="Wishlist" asp-action="AddToWishlist" asp-route-id="@Model.Id" method="post">
+                                    <button type="submit" class="btn btn-primary" aria-label="Add To Wishlist">
+                                        <span aria-hidden="true">❤</span> Wish
+                                    </button>
+                                </form>
+                            }
+                        }
                     </div>
                 </div>
             </div>

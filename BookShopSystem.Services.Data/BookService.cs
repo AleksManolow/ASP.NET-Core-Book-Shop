@@ -142,11 +142,9 @@ namespace BookShopSystem.Services.Data
 
         public async Task<bool> IsBoughtByUserWithIdAsync(string bookId, string userId)
         {
-            Book book = await this.dbContext
-                .Books
-                .FirstAsync(h => h.Id.ToString() == bookId);
-
-            return book.Users.Any(u => u.UserId.ToString() == userId);
+            return await this.dbContext
+                .Purchases
+                .AnyAsync(p => p.BookId.ToString() == bookId && p.UserId.ToString() == userId);
         }
 
         public async Task<IEnumerable<IndexViewModel>> TopThreeSellingBooksAsync()
