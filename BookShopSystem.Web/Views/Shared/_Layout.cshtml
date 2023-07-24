@@ -1,4 +1,11 @@
-﻿@using static BookShopSystem.Common.GeneralApplicationConstants
+﻿@using BookShopSystem.Services.Data.Interfaces;
+@using BookShopSystem.Web.Infrastructure.Extensions;
+@using static BookShopSystem.Common.GeneralApplicationConstants
+@inject IManagerService ManagerService 
+
+@{
+    bool isUserManager = await ManagerService.ManagerExistsByUserIdAsync(this.User.GetId());
+}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -34,12 +41,18 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Book" asp-action="MyLibrary">My Library</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Book" asp-action="Add">Add Book</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Wishlist" asp-action="MyWishlist">My Wishlist</a>
-                            </li>
+                            @if(isUserManager)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Book" asp-action="Add">Add Book</a>
+                                </li>
+                            }
+                            if(!isUserManager)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Wishlist" asp-action="MyWishlist">My Wishlist</a>
+                                </li>
+                            }
                         }
                     </ul>
                     <partial name="_LoginPartial" />

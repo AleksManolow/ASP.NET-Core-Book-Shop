@@ -1,19 +1,29 @@
 ﻿@using BookShopSystem.Data.Models;
+@using BookShopSystem.Services.Data.Interfaces;
+@using BookShopSystem.Web.Infrastructure.Extensions;
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
+@inject IManagerService ManagerService
+@{
+    bool isUserManager = await ManagerService.ManagerExistsByUserIdAsync(this.User.GetId());
+}
+
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
 {
+    if(!isUserManager)
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="MyCart">Cart</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Manager" asp-action="Become">Become Manager</a>
+        </li>
+    }
     <li class="nav-item">
-        <a  class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="MyCart">Cart</a>
-    </li>
-    <li class="nav-item">
-        <a  class="nav-link text-dark" asp-area="" asp-controller="Manager" asp-action="Become">Become Manager</a>
-    </li>
-    <li class="nav-item">
-        <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name</a>
+        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name</a>
     </li>
     <li class="nav-item">
         <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
