@@ -60,5 +60,33 @@ namespace BookShopSystem.Services.Data
             dbContext.CartItems.Remove(removeCartItem!);
             await dbContext.SaveChangesAsync();
         }
+        public async Task<bool> HasUserWithIdEnoughMoneyToBuyBookWithIdAsync(string bookId, string userId)
+        {
+            var book = await this.dbContext.Books.FirstAsync(b => b.Id.ToString() == bookId);
+            var user = await this.dbContext.Users.FirstAsync(u => u.Id.ToString() == userId);
+
+            if (book.Price > user.Wallet)
+            {
+                return false;
+            }
+            return true;
+        }
+        public async Task BuyBookAsync(string bookId, string userId)
+        {
+            var book = await this.dbContext.Books.Include(b => b.Manager.User).FirstAsync(b => b.Id.ToString() == bookId);
+            var user = await this.dbContext.Users.FirstAsync(u => u.Id.ToString() == userId);
+            user.Wallet -= book.Price;
+
+            book.Manager.User.Wallet += book.Price;
+
+            Purchase purchase = new Purchase
+            {
+                UserId = Guid.Parse(userId),
+                BookId = Guid.Parse(bookId)
+            };
+
+            await dbContext.Purchases.AddAsync(purchase);
+            await dbContext.SaveChangesAsync();
+        }
     }
 }

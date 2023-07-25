@@ -8,7 +8,6 @@ namespace BookShopSystem.Services.Data.Interfaces
     {
         Task<IEnumerable<IndexViewModel>> TopThreeSellingBooksAsync();
         Task<string> CreateAndReturnIdAsync(BookFormModel model, string managerId);
-
         Task<AllBooksFilteredAndPagedServiceModel> AllAsync(AllBookQueryModel queryModel);
         Task<bool> ExistsByIdAsync(string bookId);
         Task<BookDetailsViewModel> GetDetailsByIdAsync(string bookId);

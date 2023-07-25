@@ -61,11 +61,11 @@ namespace BookShopSystem.Web.Controllers
                 return this.RedirectToAction("All", "Book");
             }
 
-            bool isUserCart = await this.cartService
-                .HasBookWithIdAndUserIdInCartAsync(id, this.User.GetId());
-            if (!isUserCart)
+            bool isUserWish = await this.wishlistService
+                .IsUserWithIdWishBookWithIdAsync(id, this.User.GetId());
+            if (!isUserWish)
             {
-                this.TempData[ErrorMessage] = "The selected book not on this user's cart!";
+                this.TempData[ErrorMessage] = "The selected book not on this user's wishlist!";
 
                 return this.RedirectToAction("All", "Book");
             }
@@ -74,18 +74,18 @@ namespace BookShopSystem.Web.Controllers
                 await this.managerService.ManagerExistsByUserIdAsync(this.User.GetId()!);
             if (isUserManager)
             {
-                this.TempData[ErrorMessage] = "Managers can't remove from cart books. Please register as a user!";
+                this.TempData[ErrorMessage] = "Managers can't remove from wishlist books. Please register as a user!";
 
                 return this.RedirectToAction("Index", "Home");
             }
 
             try
             {
-                await this.cartService.RemoveFromCartAsync(id, this.User.GetId()!);
+                await this.wishlistService.RemoveFromWishlistAsync(id, this.User.GetId()!);
 
-                TempData[SuccessMessage] = "Successfully removed from cart!";
+                TempData[SuccessMessage] = "Successfully removed from wishlist!";
 
-                return this.RedirectToAction("MyCart", "Cart");
+                return this.RedirectToAction("MyWishlist", "Wishlist");
             }
             catch (Exception)
             {
@@ -133,6 +133,61 @@ namespace BookShopSystem.Web.Controllers
                 await this.cartService.AddToCartAsync(id, this.User.GetId()!);
 
                 TempData[SuccessMessage] = "Successfully added to cart!";
+
+                return this.RedirectToAction("MyCart", "Cart");
+            }
+            catch (Exception)
+            {
+                return this.GeneralError();
+            }
+        }
+        [HttpPost]
+        public async Task<IActionResult> Buy(string id)
+        {
+            bool bookExists = await this.bookService
+                .ExistsByIdAsync(id);
+            if (!bookExists)
+            {
+                this.TempData[ErrorMessage] = "Book with the provided id does not exist!";
+
+                return this.RedirectToAction("All", "Book");
+            }
+
+            bool isUserCart = await this.cartService
+                .HasBookWithIdAndUserIdInCartAsync(id, this.User.GetId());
+            if (!isUserCart)
+            {
+                this.TempData[ErrorMessage] =
+                    "No such book was found in your cart! Please add to cart this book.";
+
+                return this.RedirectToAction("All", "Book");
+            }
+
+            bool isUserManager =
+                await this.managerService.ManagerExistsByUserIdAsync(this.User.GetId()!);
+            if (isUserManager)
+            {
+                this.TempData[ErrorMessage] = "Managers can't buy books. Please register as a user!";
+
+                return this.RedirectToAction("Index", "Home");
+            }
+
+            bool hasEnoughMoney =
+                await this.cartService.HasUserWithIdEnoughMoneyToBuyBookWithIdAsync(id, this.User.GetId());
+            if (!hasEnoughMoney)
+            {
+                this.TempData[ErrorMessage] = "You don't have enough money to buy this book! Add money to your account to buy it!";
+
+                return this.RedirectToAction("Profile", "User");
+            }
+
+            try
+            {
+                await this.cartService.RemoveFromCartAsync(id, this.User.GetId()!);
+
+                await this.cartService.BuyBookAsync(id, this.User.GetId());
+
+                TempData[SuccessMessage] = "Successfully buy book!";
 
                 return this.RedirectToAction("MyCart", "Cart");
             }
