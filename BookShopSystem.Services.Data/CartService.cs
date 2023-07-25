@@ -76,8 +76,8 @@ namespace BookShopSystem.Services.Data
             var book = await this.dbContext.Books.Include(b => b.Manager.User).FirstAsync(b => b.Id.ToString() == bookId);
             var user = await this.dbContext.Users.FirstAsync(u => u.Id.ToString() == userId);
             user.Wallet -= book.Price;
-
             book.Manager.User.Wallet += book.Price;
+            book.NumberOfSales++;
 
             Purchase purchase = new Purchase
             {

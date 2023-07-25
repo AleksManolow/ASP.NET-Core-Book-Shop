@@ -26,7 +26,9 @@
                                     <span aria-hidden="true">📕</span> Details
                                 </a>
                                 <form asp-controller="Cart" asp-action="Buy" asp-route-id="@Model.Id" method="post">
-                                    <button class="btn btn-success" type="submit">Buy</button>
+                                    <button class="btn btn-success" type="submit" aria-label="Buy">
+                                        <span aria-hidden="true">💰</span> Buy
+                                    </button>
                                 </form>
                             </div>
                             <form class="ml-2" asp-controller="Cart" asp-action="RemoveFromCart" asp-route-id="@Model.Id" method="post">
