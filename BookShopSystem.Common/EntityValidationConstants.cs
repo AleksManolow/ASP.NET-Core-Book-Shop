@@ -37,5 +37,11 @@
             public const int PhoneNumberMaxLength = 15;
         }
 
+        public static class User
+        {
+            public const string AddMoneyToWalletMinLength = "0";
+            public const string AddMoneyToWalletMaxLength = "2000";
+        }
+
     }
 }

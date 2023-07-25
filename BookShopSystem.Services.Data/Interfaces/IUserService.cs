@@ -4,6 +4,7 @@ namespace BookShopSystem.Services.Data.Interfaces
 {
     public interface IUserService
     {
-        public Task<UserProfileViewModel> GetUserProfileInfo(string id);
+        Task<UserProfileViewModel> GetUserProfileInfo(string id);
+        Task AddMoneyToWallet(string id, decimal money);
     }
 }

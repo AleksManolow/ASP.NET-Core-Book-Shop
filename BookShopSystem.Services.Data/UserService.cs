@@ -27,5 +27,12 @@ namespace BookShopSystem.Services.Data
                 })
                 .FirstAsync();
         }
+        public async Task AddMoneyToWallet(string id, decimal money)
+        {
+            var user = await this.dbContext.Users.FirstOrDefaultAsync(u => u.Id.ToString() == id);
+            user!.Wallet += money;
+
+            await dbContext.SaveChangesAsync();
+        }
     }
 }

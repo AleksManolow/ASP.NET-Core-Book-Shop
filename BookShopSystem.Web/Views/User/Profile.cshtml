@@ -51,6 +51,9 @@
             <h2>@Model.FirstName @Model.LastName</h2>
             <p>Email: @Model.Email</p>
             <p>Wallet Balance: $@Model.Wallet</p>
+            <a asp-controller="User" asp-action="AddMoney" class="btn btn-success mr-2" aria-label="AddMoney">
+                <span aria-hidden="true">➕</span> AddMoney
+            </a>
         </div>
     </div>
 </body>
