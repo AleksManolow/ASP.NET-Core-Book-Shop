@@ -2,6 +2,8 @@
 using BookShopSystem.Web.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Mvc;
 
+using static BookShopSystem.Common.NotificationMessagesConstants;
+
 namespace BookShopSystem.Web.Controllers
 {
     public class UserController : Controller
@@ -14,10 +16,11 @@ namespace BookShopSystem.Web.Controllers
 
         public async Task<IActionResult> Profile() 
         {
-            /*if ()
+            if (string.IsNullOrWhiteSpace(this.User.GetId()))
             {
-
-            }*/
+                this.TempData[ErrorMessage] = "You are not logged in!";
+                return View("Error404");
+            }
             return View(await userService.GetUserProfileInfo(this.User.GetId()));  
         }
     }
