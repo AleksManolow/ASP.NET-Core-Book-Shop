@@ -6,6 +6,8 @@ using BookShopSystem.Web.Infrastructure.Extensions;
 using BookShopSystem.Services.Data.Interfaces;
 using HouseRentingSystem.Web.Infrastructure.ModelBinders;
 
+using static BookShopSystem.Common.GeneralApplicationConstants;
+
 namespace BookShopSystem.Web
 {
     public class Program
@@ -25,6 +27,7 @@ namespace BookShopSystem.Web
                 options.SignIn.RequireConfirmedAccount = false;
                 options.Password.RequireNonAlphanumeric = false;
             })
+                .AddRoles<IdentityRole<Guid>>()
                 .AddEntityFrameworkStores<BookShopDbContext>();
 
             builder.Services.AddApplicationServices(typeof(IBookService));
@@ -59,6 +62,8 @@ namespace BookShopSystem.Web
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.SeedAdministrator(DevelopmentAdminEmail);
 
             app.MapControllerRoute(
                 name: "default",
