@@ -136,7 +136,7 @@ namespace BookShopSystem.Web.Controllers
 
             bool isUserManager = await this.managerService
                 .ManagerExistsByUserIdAsync(this.User.GetId()!);
-            if (!isUserManager)
+            if (!isUserManager && !this.User.IsAdmin())
             {
                 this.TempData[ErrorMessage] = "You must become a manager in order to edit book info!";
 
@@ -147,7 +147,7 @@ namespace BookShopSystem.Web.Controllers
                 await this.managerService.GetManagerIdByUserIdAsync(this.User.GetId()!);
             bool isManagerSeller = await this.bookService
                 .IsManagerWithIdSellerOfBookWithIdAsync(id, managerId!);
-            if (!isManagerSeller)
+            if (!isManagerSeller && !this.User.IsAdmin())
             {
                 this.TempData[ErrorMessage] = "You must be the manager seller of the book you want to edit!";
 
@@ -180,7 +180,7 @@ namespace BookShopSystem.Web.Controllers
 
             bool isUserManager = await this.managerService
                 .ManagerExistsByUserIdAsync(this.User.GetId()!);
-            if (!isUserManager)
+            if (!isUserManager && !this.User.IsAdmin())
             {
                 this.TempData[ErrorMessage] = "You must become a manager in order to edit book info!";
 
@@ -191,7 +191,7 @@ namespace BookShopSystem.Web.Controllers
                 await this.managerService.GetManagerIdByUserIdAsync(this.User.GetId()!);
             bool isManagerSaller = await this.bookService
                 .IsManagerWithIdSellerOfBookWithIdAsync(id, managerId!);
-            if (!isManagerSaller)
+            if (!isManagerSaller && !this.User.IsAdmin())
             {
                 this.TempData[ErrorMessage] = "You must be the manager seller of the book you want to edit!";
 
@@ -224,7 +224,7 @@ namespace BookShopSystem.Web.Controllers
 
             bool isUserManager = await this.managerService
                 .ManagerExistsByUserIdAsync(this.User.GetId()!);
-            if (!isUserManager)
+            if (!isUserManager && !this.User.IsAdmin())
             {
                 this.TempData[ErrorMessage] = "You must become a manager in order to edit book info!";
 
@@ -235,7 +235,7 @@ namespace BookShopSystem.Web.Controllers
                 await this.managerService.GetManagerIdByUserIdAsync(this.User.GetId()!);
             bool isManagerSaller = await this.bookService
                 .IsManagerWithIdSellerOfBookWithIdAsync(id, managerId!);
-            if (!isManagerSaller)
+            if (!isManagerSaller && !this.User.IsAdmin())
             {
                 this.TempData[ErrorMessage] = "You must be the manager seller of the book you want to edit!";
 
@@ -277,7 +277,7 @@ namespace BookShopSystem.Web.Controllers
 
             bool isUserManager = await this.managerService
                 .ManagerExistsByUserIdAsync(this.User.GetId()!);
-            if (!isUserManager)
+            if (!isUserManager && !this.User.IsAdmin())
             {
                 this.TempData[ErrorMessage] = "You must become a manager in order to edit book info!";
 
@@ -288,7 +288,7 @@ namespace BookShopSystem.Web.Controllers
                 await this.managerService.GetManagerIdByUserIdAsync(this.User.GetId()!);
             bool isManagerSaller = await this.bookService
                 .IsManagerWithIdSellerOfBookWithIdAsync(id, managerId!);
-            if (!isManagerSaller)
+            if (!isManagerSaller && !this.User.IsAdmin() )
             {
                 this.TempData[ErrorMessage] = "You must be the manager seller of the book you want to edit!";
 
@@ -324,7 +324,16 @@ namespace BookShopSystem.Web.Controllers
 
             try
             {
-                if (isUserManager)
+                if (this.User.IsAdmin())
+                {
+                    string? managerId =
+                        await this.managerService.GetManagerIdByUserIdAsync(userId);
+
+                    myBooks.AddRange(await this.bookService.AllByManagerIdAsync(managerId!));
+                    myBooks.AddRange(await this.bookService.AllByUserIdAsync(userId));
+                    myBooks = myBooks.DistinctBy(b => b.Id).ToList();
+                }
+                else if (isUserManager)
                 {
                     string? managerId =
                         await this.managerService.GetManagerIdByUserIdAsync(userId);

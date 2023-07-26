@@ -47,7 +47,7 @@
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Book" asp-action="Add">Add Book</a>
                                 </li>
                             }
-                            if(!isUserManager)
+                            if(!isUserManager || this.User.IsAdmin())
                             {
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Wishlist" asp-action="MyWishlist">My Wishlist</a>

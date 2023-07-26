@@ -58,7 +58,7 @@ namespace BookShopSystem.Web.Controllers
 
             bool isUserManager =
                 await this.managerService.ManagerExistsByUserIdAsync(this.User.GetId()!);
-            if (isUserManager)
+            if (isUserManager && !this.User.IsAdmin())
             {
                 this.TempData[ErrorMessage] = "Managers can't add to wishlist books. Please register as a user!";
 
@@ -83,7 +83,7 @@ namespace BookShopSystem.Web.Controllers
         {
             bool isUserManager =
                 await this.managerService.ManagerExistsByUserIdAsync(this.User.GetId()!);
-            if (isUserManager)
+            if (isUserManager && !this.User.IsAdmin())
             {
                 this.TempData[ErrorMessage] = "Managers has no wishlist. Please register as a user!";
 
@@ -126,7 +126,7 @@ namespace BookShopSystem.Web.Controllers
 
             bool isUserManager =
                 await this.managerService.ManagerExistsByUserIdAsync(this.User.GetId()!);
-            if (isUserManager)
+            if (isUserManager && !this.User.IsAdmin())
             {
                 this.TempData[ErrorMessage] = "Managers can't remove from wishlist books. Please register as a user!";
 
@@ -171,7 +171,7 @@ namespace BookShopSystem.Web.Controllers
 
             bool isUserManager =
                 await this.managerService.ManagerExistsByUserIdAsync(this.User.GetId()!);
-            if (isUserManager)
+            if (isUserManager && !this.User.IsAdmin())
             {
                 this.TempData[ErrorMessage] = "Managers can't move to cart. Please register as a user!";
 

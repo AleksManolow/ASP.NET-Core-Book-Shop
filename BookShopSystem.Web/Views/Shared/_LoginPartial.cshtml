@@ -13,11 +13,14 @@
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
 {
-    if(!isUserManager)
+    if (!isUserManager || this.User.IsAdmin())
     {
         <li class="nav-item">
             <a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="MyCart">Cart</a>
         </li>
+    }
+    if(!isUserManager)
+    {
         <li class="nav-item">
             <a class="nav-link text-dark" asp-area="" asp-controller="Manager" asp-action="Become">Become Manager</a>
         </li>

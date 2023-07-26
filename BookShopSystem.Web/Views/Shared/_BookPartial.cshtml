@@ -31,7 +31,7 @@
                         </a>
                         @if(this.User.Identity?.IsAuthenticated ?? false)
                         {
-                            @if(isUserManager && isManagerSellerOfTheBook)
+                            @if((isUserManager && isManagerSellerOfTheBook) || this.User.IsAdmin())
                             {
                                 <a asp-controller="Book" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning mr-2" aria-label="Edit">
                                     <span aria-hidden="true">✏️</span> Edit
@@ -41,7 +41,7 @@
                                 </a>
                             }
 
-                            @if(!isBookBoughtByUser && !isUserManager)
+                            @if(!isBookBoughtByUser && (!isUserManager || this.User.IsAdmin()))
                             {
                                 <form class="ml-2" asp-controller="Cart" asp-action="AddToCart" asp-route-id="@Model.Id" method="post">
                                     <button type="submit" class="btn btn-success" aria-label="Add To Cart">

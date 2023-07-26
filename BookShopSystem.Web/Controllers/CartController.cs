@@ -29,7 +29,7 @@ namespace BookShopSystem.Web.Controllers
         {
             bool isUserManager =
                 await this.managerService.ManagerExistsByUserIdAsync(this.User.GetId()!);
-            if (isUserManager)
+            if (isUserManager && !this.User.IsAdmin())
             {
                 this.TempData[ErrorMessage] = "Managers has no cart. Please register as a user!";
 
@@ -61,31 +61,22 @@ namespace BookShopSystem.Web.Controllers
                 return this.RedirectToAction("All", "Book");
             }
 
-            bool isUserWish = await this.wishlistService
-                .IsUserWithIdWishBookWithIdAsync(id, this.User.GetId());
-            if (!isUserWish)
-            {
-                this.TempData[ErrorMessage] = "The selected book not on this user's wishlist!";
-
-                return this.RedirectToAction("All", "Book");
-            }
-
             bool isUserManager =
                 await this.managerService.ManagerExistsByUserIdAsync(this.User.GetId()!);
-            if (isUserManager)
+            if (isUserManager && !this.User.IsAdmin())
             {
-                this.TempData[ErrorMessage] = "Managers can't remove from wishlist books. Please register as a user!";
+                this.TempData[ErrorMessage] = "Managers can't remove from cart books. Please register as a user!";
 
                 return this.RedirectToAction("Index", "Home");
             }
 
             try
             {
-                await this.wishlistService.RemoveFromWishlistAsync(id, this.User.GetId()!);
+                await this.cartService.RemoveFromCartAsync(id, this.User.GetId()!);
 
-                TempData[SuccessMessage] = "Successfully removed from wishlist!";
+                TempData[SuccessMessage] = "Successfully removed from cart!";
 
-                return this.RedirectToAction("MyWishlist", "Wishlist");
+                return this.RedirectToAction("MyCart", "Cart");
             }
             catch (Exception)
             {
@@ -116,7 +107,7 @@ namespace BookShopSystem.Web.Controllers
 
             bool isUserManager =
                 await this.managerService.ManagerExistsByUserIdAsync(this.User.GetId()!);
-            if (isUserManager)
+            if (isUserManager && !this.User.IsAdmin())
             {
                 this.TempData[ErrorMessage] = "Managers can't add to cart books. Please register as a user!";
 
@@ -165,7 +156,7 @@ namespace BookShopSystem.Web.Controllers
 
             bool isUserManager =
                 await this.managerService.ManagerExistsByUserIdAsync(this.User.GetId()!);
-            if (isUserManager)
+            if (isUserManager && !this.User.IsAdmin())
             {
                 this.TempData[ErrorMessage] = "Managers can't buy books. Please register as a user!";
 
