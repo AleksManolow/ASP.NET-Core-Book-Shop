@@ -61,6 +61,15 @@ namespace BookShopSystem.Web.Controllers
                 return this.RedirectToAction("All", "Book");
             }
 
+            bool isUserWish = await this.cartService
+                .HasBookWithIdAndUserIdInCartAsync(id, this.User.GetId());
+            if (!isUserWish)
+            {
+                this.TempData[ErrorMessage] = "The selected book not on this user's cart!";
+
+                return this.RedirectToAction("All", "Book");
+            }
+
             bool isUserManager =
                 await this.managerService.ManagerExistsByUserIdAsync(this.User.GetId()!);
             if (isUserManager && !this.User.IsAdmin())
