@@ -1,4 +1,4 @@
-﻿﻿@{
+﻿@*﻿@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -15,6 +15,7 @@
     <hr class="my-4">
     <a asp-area="" asp-controller="Book" asp-action="All"
        class="btn btn-primary btn-lg">All Books</a>
+    <span>  |   </span>
     <a asp-area="" asp-controller="Book" asp-action="Add"
        class="btn btn-primary btn-lg">Add Book</a>
     <span>  |   </span>
@@ -23,4 +24,82 @@
     <span>  |   </span>
     <a asp-area="Admin" asp-controller="User" asp-action="All"
        class="btn btn-primary btn-lg">All Users</a>
+</div>*@
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<style>
+    .bg-image {
+        background-image: url('https://example.com/path/to/your/image.jpg'); /* Заменете с реалния URL на картинката */
+        background-size: cover;
+        background-position: center;
+        height: 400px; /* Променете височината според вашите нужди */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #ffffff;
+        text-align: center;
+    }
+
+    .bg-overlay {
+        background-color: rgba(0, 0, 0, 0.6); /* Цвят на прозрачния слой */
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .bg-content {
+        position: relative;
+        z-index: 1;
+    }
+
+        /* Стилове на текста */
+        .bg-content h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .bg-content .lead {
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        /* Стилове на бутоните */
+        .bg-content .btn {
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            margin: 5px;
+            color: #ffffff;
+            background-color: #007bff;
+            border: 1px solid #007bff;
+            transition: background-color 0.3s ease;
+        }
+
+            .bg-content .btn:hover {
+                background-color: #0056b3;
+            }
+</style>
+
+<div class="bg-image">
+    <div class="bg-overlay"></div>
+    <div class="bg-content">
+        <h2>Hello, Admin!</h2>
+        <p class="lead">This is your administrator area - you can <b>read</b>, <b>create</b>, <b>delete</b>, and <b>edit</b> books.<br />You can <b>add to favorites</b> and <b>buy</b> books, too!</p>
+        <p class="lead">You can also see <b>all users and managers</b>.</p>
+        <hr>
+        <a asp-area="" asp-controller="Book" asp-action="All" class="btn btn-primary btn-lg">All Books</a>
+        <span>  |   </span>
+        <a asp-area="" asp-controller="Book" asp-action="Add" class="btn btn-primary btn-lg">Add Book</a>
+        <span>  |   </span>
+        <a asp-area="Admin" asp-controller="Book" asp-action="Mine" class="btn btn-primary btn-lg">My Book</a>
+        <span>  |   </span>
+        <a asp-area="Admin" asp-controller="User" asp-action="All" class="btn btn-primary btn-lg">All Users</a>
+    </div>
 </div>
+
+
+
