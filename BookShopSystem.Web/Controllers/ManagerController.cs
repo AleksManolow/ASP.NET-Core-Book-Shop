@@ -60,9 +60,9 @@ namespace BookShopSystem.Web.Controllers
                 .HasBooksByUserIdAsync(userId);
             if (userHasActivePurchases)
             {
-                this.TempData[ErrorMessage] = "You don't have to have books to become a manager!";
+                this.TempData[ErrorMessage] = "You do have to not have books to become a manager!";
 
-                return this.RedirectToAction("Mine", "Book");
+                return this.RedirectToAction("MyLibrary", "Book");
             }
 
             try

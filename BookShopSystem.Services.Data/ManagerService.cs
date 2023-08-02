@@ -36,15 +36,7 @@ namespace BookShopSystem.Services.Data
 
         public async Task<bool> HasBooksByUserIdAsync(string userId)
         {
-            ApplicationUser? user = await this.dbContext
-                .Users
-                .FirstOrDefaultAsync(u => u.Id.ToString() == userId);
-            if (user == null)
-            {
-                return false;
-            }
-
-            return user.Books.Any();
+            return await this.dbContext.Purchases.AnyAsync(u => u.UserId.ToString() == userId);
         }
 
         public async Task Create(string userId, BecomeManagerFormModel model)
