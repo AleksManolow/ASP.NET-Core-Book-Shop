@@ -1,0 +1,35 @@
+﻿@model MyBooksViewModel
+@{
+    ViewBag.Title = "My Books";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<h4 class="text-white">My Added Books</h4>
+
+@if (!Model.AddedBooks.Any())
+{
+    <h2 class="text-center  text-white">You have no added books yet!</h2>
+}
+
+<div class="row">
+    @foreach (var house in Model.AddedBooks)
+    {
+        @await Html.PartialAsync("~/Views/Shared/_BookPartial.cshtml", house)
+    }
+</div>
+
+<h4 class="text-white">My purchases</h4>
+
+@if (!Model.BoughtBooks.Any())
+{
+    <h2 class="text-center text-white">You have no bought books yet!</h2>
+}
+
+<div class="row">
+    @foreach (var house in Model.BoughtBooks)
+    {
+        @await Html.PartialAsync("~/Views/Shared/_BookPartial.cshtml", house)
+    }
+</div>

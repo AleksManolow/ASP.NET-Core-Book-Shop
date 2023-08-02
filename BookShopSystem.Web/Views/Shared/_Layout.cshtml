@@ -38,9 +38,19 @@
                         </li>
                         @if(this.User.Identity?.IsAuthenticated ?? false)
                         {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Book" asp-action="MyLibrary">My Library</a>
-                            </li>
+                            @if(!this.User.IsAdmin())
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Book" asp-action="MyLibrary">My Library</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="Admin" asp-controller="Book" asp-action="Mine">My Library</a>
+                                </li>
+                            }
+                            
                             @if(isUserManager)
                             {
                                 <li class="nav-item">

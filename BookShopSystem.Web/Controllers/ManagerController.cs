@@ -36,7 +36,7 @@ namespace BookShopSystem.Web.Controllers
         public async Task<IActionResult> Become(BecomeManagerFormModel model)
         {
             string? userId = this.User.GetId();
-            bool isManager = await this.managerService.ManagerExistsByPhoneNumberAsync(userId);
+            bool isManager = await this.managerService.ManagerExistsByUserIdAsync(userId);
             if (isManager)
             {
                 this.TempData[ErrorMessage] = "You are already an manager!";

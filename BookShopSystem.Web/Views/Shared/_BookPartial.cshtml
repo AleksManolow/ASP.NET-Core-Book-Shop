@@ -26,29 +26,29 @@
                     <h6>Age Restriction: <b>@Model.AgeRestriction</b></h6>
                     <br />
                     <div class="d-flex justify-content-between mb-2">
-                        <a asp-controller="Book" asp-action="Details" asp-route-id="@Model.Id" class="btn btn-success mr-2" aria-label="Details">
+                        <a asp-area="" asp-controller="Book" asp-action="Details" asp-route-id="@Model.Id" class="btn btn-success mr-2" aria-label="Details">
                             <span aria-hidden="true">📕</span> Details
                         </a>
                         @if(this.User.Identity?.IsAuthenticated ?? false)
                         {
                             @if((isUserManager && isManagerSellerOfTheBook) || this.User.IsAdmin())
                             {
-                                <a asp-controller="Book" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning mr-2" aria-label="Edit">
+                                <a asp-area="" asp-controller="Book" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning mr-2" aria-label="Edit">
                                     <span aria-hidden="true">✏️</span> Edit
                                 </a>
-                                <a asp-controller="Book" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger mr-2" aria-label="Delete">
+                                <a asp-area="" asp-controller="Book" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger mr-2" aria-label="Delete">
                                     <span aria-hidden="true">❌</span> Delete
                                 </a>
                             }
 
                             @if(!isBookBoughtByUser && (!isUserManager || this.User.IsAdmin()))
                             {
-                                <form class="ml-2" asp-controller="Cart" asp-action="AddToCart" asp-route-id="@Model.Id" method="post">
+                                <form class="ml-2" asp-area="" asp-controller="Cart" asp-action="AddToCart" asp-route-id="@Model.Id" method="post">
                                     <button type="submit" class="btn btn-success" aria-label="Add To Cart">
                                         <span aria-hidden="true">🛒</span> Add To Cart
                                     </button>
                                 </form>
-                                <form class="ml-2" asp-controller="Wishlist" asp-action="AddToWishlist" asp-route-id="@Model.Id" method="post">
+                                <form class="ml-2" asp-area="" asp-controller="Wishlist" asp-action="AddToWishlist" asp-route-id="@Model.Id" method="post">
                                     <button type="submit" class="btn btn-primary" aria-label="Add To Wishlist">
                                         <span aria-hidden="true">❤</span> Wish
                                     </button>

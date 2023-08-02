@@ -3,6 +3,8 @@ using BookShopSystem.Web.ViewModels.Home;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
+using static BookShopSystem.Common.GeneralApplicationConstants;
+
 namespace BookShopSystem.Web.Controllers
 {
     public class HomeController : Controller
@@ -15,6 +17,10 @@ namespace BookShopSystem.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
+            if (this.User.IsInRole(AdminRoleName))
+            {
+                return this.RedirectToAction("Index", "Home", new { Area = AdminAreaName } );
+            }
             IEnumerable<IndexViewModel> viewModels = await bookService.TopThreeSellingBooksAsync();
             return View(viewModels);
         }
