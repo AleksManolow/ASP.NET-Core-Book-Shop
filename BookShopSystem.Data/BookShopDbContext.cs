@@ -10,6 +10,10 @@ namespace BookShopSystem.Data
         public BookShopDbContext(DbContextOptions<BookShopDbContext> options)
             : base(options)
         {
+            if (!this.Database.IsRelational())
+            {
+                this.Database.EnsureCreated();
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder builder)

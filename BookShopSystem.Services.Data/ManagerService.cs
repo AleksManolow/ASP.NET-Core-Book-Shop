@@ -68,17 +68,17 @@ namespace BookShopSystem.Services.Data
 
         public async Task<bool> HasBookWithIdAsync(string? userId, string bookId)
         {
-            Manager? agent = await this.dbContext
+            Manager? manager = await this.dbContext
                 .Managers
                 .Include(a => a.Books)
                 .FirstOrDefaultAsync(a => a.UserId.ToString() == userId);
-            if (agent == null)
+            if (manager == null)
             {
                 return false;
             }
 
             bookId = bookId.ToLower();
-            return agent.Books.Any(h => h.Id.ToString() == bookId);
+            return manager.Books.Any(h => h.Id.ToString() == bookId);
         }
     }
 }
