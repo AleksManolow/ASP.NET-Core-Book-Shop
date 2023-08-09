@@ -1,44 +1,4 @@
-﻿@*@using BookShopSystem.Web.Areas.Admin.ViewModels.User;
-@model IEnumerable<UserViewModel>
-
-@{
-    ViewBag.Title = "All Users";
-}
-
-<h2 class="text-center">@ViewBag.Title</h2>
-<hr />
-
-<table class="table table-striped text-white">
-    <thead>
-        <tr>
-            <th><label>Email</label></th>
-            <th><label>Full Name</label></th>
-            <th><label>Phone Number</label></th>
-            <th><label>User Is Manager</label></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var user in Model)
-        {
-            <tr>
-                <td class="text-white"><label>@user.Email</label></td>
-                <td class="text-white"><label>@user.FullName</label></td>
-                <td class="text-white"><label>@user.PhoneNumber</label></td>
-                <td class="text-white">
-                    @if (user.PhoneNumber != string.Empty)
-                    {
-                        <label>✔</label>
-                    }
-                    else
-                    {
-                        <label class="text-center">❌</label>
-                    }
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>*@
-@using BookShopSystem.Web.Areas.Admin.ViewModels.User;
+﻿@using BookShopSystem.Web.Areas.Admin.ViewModels.User;
 @model IEnumerable<UserViewModel>
 
 @{
@@ -62,8 +22,8 @@
             @foreach (var user in Model)
             {
                 <tr>
-                    <td class="text-white">@user.Email</td>
                     <td class="text-white">@user.FullName</td>
+                    <td class="text-white">@user.Email</td>
                     <td class="text-white">@user.PhoneNumber</td>
                     <td>
                         @if (!string.IsNullOrEmpty(user.PhoneNumber))
