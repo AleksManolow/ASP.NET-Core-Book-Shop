@@ -23,22 +23,22 @@ namespace BookShopSystem.Tests
         public void OneTimeSetUp()
         {
             this.dbOptions = new DbContextOptionsBuilder<BookShopDbContext>()
-                .UseInMemoryDatabase("BookShopInMemory")
+                .UseInMemoryDatabase("BookShopInMemory" + Guid.NewGuid().ToString())
                 .Options;
             this.dbContext = new BookShopDbContext(this.dbOptions);
             SeedDatabase(this.dbContext);
             this.wishlistService = new WishlistService(this.dbContext);
         }
 
-        [SetUp]
+        /*[SetUp]
         public void Setup()
         {
-        }
+        }*/
 
         [Test]
         public async Task IsUserWithIdWishBookWithIdAsyncShouldReturnTrueWhenExists()
         {
-            string bookId = Book.Id.ToString();
+            string bookId = NewBook.Id.ToString();
             string userId = ManagerUser.Id.ToString();
 
             var result = await this.wishlistService.IsUserWithIdWishBookWithIdAsync(bookId, userId);
@@ -48,7 +48,7 @@ namespace BookShopSystem.Tests
         [Test]
         public async Task AddToWishlistAsyncShouldReturnTrueWhenExists()
         {
-            string bookId = Book.Id.ToString();
+            string bookId = NewBook.Id.ToString();
             string userId = ManagerUser.Id.ToString();
 
             await this.wishlistService.AddToWishlistAsync(bookId, userId);
@@ -60,7 +60,7 @@ namespace BookShopSystem.Tests
         [Test]
         public async Task RemoveFromWishlistAsyncShouldReturnTrueWhenExists()
         {
-            string bookId = Book.Id.ToString();
+            string bookId = NewBook.Id.ToString();
             string userId = ManagerUser.Id.ToString();
 
             await this.wishlistService.AddToWishlistAsync(bookId, userId);
@@ -78,7 +78,7 @@ namespace BookShopSystem.Tests
         [Test]
         public async Task WishlistByUserIdAsyncShouldReturnTrueWhenExists()
         {
-            string bookId = Book.Id.ToString();
+            string bookId = NewBook.Id.ToString();
             string userId = ManagerUser.Id.ToString();
 
             await this.wishlistService.AddToWishlistAsync(bookId, userId);

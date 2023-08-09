@@ -25,17 +25,17 @@ namespace BookShopSystem.Tests
         public void OneTimeSetUp()
         {
             this.dbOptions = new DbContextOptionsBuilder<BookShopDbContext>()
-                .UseInMemoryDatabase("BookShopInMemory")
+                .UseInMemoryDatabase("BookShopInMemory" + Guid.NewGuid().ToString())
                 .Options;
             this.dbContext = new BookShopDbContext(this.dbOptions);
             SeedDatabase(this.dbContext);
             this.userService = new UserService(this.dbContext);
         }
 
-        [SetUp]
+        /*[SetUp]
         public void Setup()
         {
-        }
+        }*/
         [Test]
         public async Task GetUserProfileInfoShouldReturnTrueWhenExists() 
         {
@@ -68,8 +68,6 @@ namespace BookShopSystem.Tests
         [Test]
         public async Task AllAsyncShouldReturnTrueWhenExists()
         {
-            string userId = BuyerUser.Id.ToString();
-
             var result = await this.userService.AllAsync();
 
             Assert.True(result.Count() == 2);

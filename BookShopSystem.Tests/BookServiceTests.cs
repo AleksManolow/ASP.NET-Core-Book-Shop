@@ -24,22 +24,22 @@ namespace BookShopSystem.Tests
         public void OneTimeSetUp()
         {
             this.dbOptions = new DbContextOptionsBuilder<BookShopDbContext>()
-                .UseInMemoryDatabase("BookShopInMemory")
+                .UseInMemoryDatabase("BookShopInMemory" + Guid.NewGuid().ToString())
                 .Options;
             this.dbContext = new BookShopDbContext(this.dbOptions);
             SeedDatabase(this.dbContext);
             this.bookService = new BookService(this.dbContext);
         }
 
-        [SetUp]
+        /*[SetUp]
         public void Setup()
         {
-        }
+        }*/
 
         [Test]
         public async Task ExistsByIdAsyncShouldReturnTrueWhenExists()
         {
-            string bookId = Book.Id.ToString();
+            string bookId = NewBook.Id.ToString();
 
             bool result = await this.bookService.ExistsByIdAsync(bookId);
 
@@ -49,7 +49,7 @@ namespace BookShopSystem.Tests
         [Test]
         public async Task GetDetailsByIdAsyncShouldReturnTrueWhenExists()
         {
-            string bookId = Book.Id.ToString();
+            string bookId = NewBook.Id.ToString();
 
             var result = await this.bookService.GetDetailsByIdAsync(bookId);
 
@@ -58,7 +58,7 @@ namespace BookShopSystem.Tests
         [Test]
         public async Task IsBoughtByUserWithIdAsyncShouldReturnTrueWhenExists()
         {
-            string bookId = Book.Id.ToString();
+            string bookId = NewBook.Id.ToString();
             string userId = BuyerUser.Id.ToString();
 
             var result = await this.bookService.IsBoughtByUserWithIdAsync(bookId, userId);
@@ -75,8 +75,8 @@ namespace BookShopSystem.Tests
         [Test]
         public async Task IsManagerWithIdSellerOfBookWithIdAsyncShouldReturnTrueWhenExists()
         {
-            string bookId = Book.Id.ToString();
-            string mangerId = Manager.Id.ToString();
+            string bookId = NewBook.Id.ToString();
+            string mangerId = NewManager.Id.ToString();
 
             var result = await this.bookService.IsManagerWithIdSellerOfBookWithIdAsync(bookId, mangerId);
 
@@ -85,26 +85,17 @@ namespace BookShopSystem.Tests
         [Test]
         public async Task GetBookForDeleteByIdAsyncShouldReturnTrueWhenExists()
         {
-            string bookId = Book.Id.ToString();
+            string bookId = NewBook.Id.ToString();
 
             var result = await this.bookService.GetBookForDeleteByIdAsync(bookId);
 
             Assert.IsInstanceOf(typeof(BookPreDeleteDetailsViewModel), result);
-            Assert.That(Book.Title, Is.EqualTo(result.Title));
-        }
-        [Test]
-        public async Task DeleteBookByIdAsync()
-        {
-            string bookId = Book.Id.ToString();
-
-            await this.bookService.DeleteBookByIdAsync(bookId);
-
-            Assert.False(Book.IsActive);
+            Assert.That(NewBook.Title, Is.EqualTo(result.Title));
         }
         [Test] 
         public async Task EditBookShouldReturnTrueWhenExists()
         {
-            string bookId = Book.Id.ToString();
+            string bookId = NewBook.Id.ToString();
 
             var bookToEdit = await this.bookService.GetBookForEditByIdAsync(bookId);
 
@@ -112,12 +103,21 @@ namespace BookShopSystem.Tests
 
             await this.bookService.EditBookByIdAndFormModelAsync(bookId, bookToEdit);
 
-            Assert.True(Book.Title == "ChangeTitle");
+            Assert.True(NewBook.Title == "ChangeTitle");
+        }
+        [Test]
+        public async Task DeleteBookByIdAsync()
+        {
+            string bookId = NewBook.Id.ToString();
+
+            await this.bookService.DeleteBookByIdAsync(bookId);
+
+            Assert.False(NewBook.IsActive);
         }
         [Test]
         public async Task AllByManagerIdAsyncShouldReturnTrueWhenExists()
         {
-            string managerId = Manager.Id.ToString();  
+            string managerId = NewManager.Id.ToString();  
 
             var result = await this.bookService.AllByManagerIdAsync(managerId);
 

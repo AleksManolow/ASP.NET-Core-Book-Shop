@@ -13,9 +13,9 @@ namespace BookShopSystem.Tests
     {
         public static ApplicationUser ManagerUser;
         public static ApplicationUser BuyerUser;
-        public static Manager Manager;
-        public static Book Book;
-        public static Purchase Purchase;
+        public static Manager NewManager;
+        public static Book NewBook;
+        public static Purchase NewPurchase;
 
         public static void SeedDatabase(BookShopDbContext dbContext)
         {
@@ -48,7 +48,7 @@ namespace BookShopSystem.Tests
                 LastName = "Goshov",
                 Wallet = 100
             };
-            Manager = new Manager()
+            NewManager = new Manager()
             {
                 FirstName = "Pesho",
                 LastName = "Petrov",
@@ -56,7 +56,7 @@ namespace BookShopSystem.Tests
                 User = ManagerUser
             };
 
-            Book = new Book()
+            NewBook = new Book()
             {
                 Title = "Anna Karenina",
                 Author = "Leo Tolstoy",
@@ -66,20 +66,20 @@ namespace BookShopSystem.Tests
                 AgeRestriction = 12,
                 ReleaseDate = DateTime.Parse("1877-06-26 10:57:31.1728595"),
                 GenreId = 1,
-                Manager = Manager
+                Manager = NewManager
             };
 
-            Purchase = new Purchase()
+            NewPurchase = new Purchase()
             {
                 User = BuyerUser,
-                Book = Book
+                Book = NewBook
             };
 
             dbContext.Users.Add(ManagerUser);
             dbContext.Users.Add(BuyerUser);
-            dbContext.Managers.Add(Manager);
-            dbContext.Books.Add(Book);
-            dbContext.Purchases.Add(Purchase);  
+            dbContext.Managers.Add(NewManager);
+            dbContext.Books.Add(NewBook);
+            dbContext.Purchases.Add(NewPurchase);  
 
             dbContext.SaveChanges();
         }

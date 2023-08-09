@@ -18,7 +18,7 @@ namespace BookShopSystem.Tests
         public void OneTimeSetUp()
         {
             this.dbOptions = new DbContextOptionsBuilder<BookShopDbContext>()
-                .UseInMemoryDatabase("BookShopInMemory")
+                .UseInMemoryDatabase("BookShopInMemory" + Guid.NewGuid().ToString())
                 .Options;
             this.dbContext = new BookShopDbContext(this.dbOptions);
             SeedDatabase(this.dbContext);
@@ -26,10 +26,10 @@ namespace BookShopSystem.Tests
         }
 
 
-        [SetUp]
+        /*[SetUp]
         public void Setup()
         {
-        }
+        }*/
 
         [Test]
         public async Task ManagerExistsByUserIdAsyncShouldReturnTrueWhenExists()
@@ -44,7 +44,7 @@ namespace BookShopSystem.Tests
         [Test]
         public async Task ManagerExistsByPhoneNumberAsyncShouldReturnTrueWhenExists()
         {
-            string existingManagerPhoneNumber = Manager.PhoneNumber;
+            string existingManagerPhoneNumber = NewManager.PhoneNumber;
 
             bool result = await this.managerService.ManagerExistsByPhoneNumberAsync(existingManagerPhoneNumber);
 
@@ -63,9 +63,9 @@ namespace BookShopSystem.Tests
         [Test]
         public async Task HasBookWithIdAsyncShouldReturnTrueWhenExists()
         {
-            string existingManagerId = Manager.UserId.ToString();
+            string existingManagerId = NewManager.UserId.ToString();
 
-            string book = Book.Id.ToString();
+            string book = NewBook.Id.ToString();
 
             bool result = await this.managerService.HasBookWithIdAsync(existingManagerId, book);
 
