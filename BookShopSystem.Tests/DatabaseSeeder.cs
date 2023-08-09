@@ -45,7 +45,8 @@ namespace BookShopSystem.Tests
                 SecurityStamp = "f6af46f5-74ba-43dc-927b-ad83497d0387",
                 TwoFactorEnabled = false,
                 FirstName = "Gosho",
-                LastName = "Goshov"
+                LastName = "Goshov",
+                Wallet = 100
             };
             Manager = new Manager()
             {
