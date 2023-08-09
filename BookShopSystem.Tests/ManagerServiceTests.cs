@@ -7,7 +7,7 @@ using static BookShopSystem.Tests.DatabaseSeeder;
 
 namespace BookShopSystem.Tests
 {
-    public class ManagerSeriveTests
+    public class ManagerServiceTests
     {
         private DbContextOptions<BookShopDbContext> dbOptions;
         private BookShopDbContext dbContext;
