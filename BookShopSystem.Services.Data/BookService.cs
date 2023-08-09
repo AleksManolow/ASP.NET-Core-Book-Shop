@@ -187,7 +187,7 @@ namespace BookShopSystem.Services.Data
                 ImageUrl = book.ImageUrl
             };
         }
-        public async Task DeleteHouseByIdAsync(string bookId)
+        public async Task DeleteBookByIdAsync(string bookId)
         {
             Book bookToDelete = await this.dbContext
                 .Books

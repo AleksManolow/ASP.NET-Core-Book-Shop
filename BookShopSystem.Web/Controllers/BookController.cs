@@ -200,7 +200,7 @@ namespace BookShopSystem.Web.Controllers
 
             try
             {
-                await this.bookService.DeleteHouseByIdAsync(id);
+                await this.bookService.DeleteBookByIdAsync(id);
 
                 this.TempData[WarningMessage] = "The book was successfully deleted!";
                 return this.RedirectToAction("Mine", "Book");

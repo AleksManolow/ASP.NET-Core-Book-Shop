@@ -71,7 +71,6 @@ namespace BookShopSystem.Tests
 
             Assert.IsTrue(result);
         }
-        //HasBooksByUserIdAsync
         [Test]
         public async Task HasBooksByUserIdAsyncShouldReturnTrueWhenExists()
         {
