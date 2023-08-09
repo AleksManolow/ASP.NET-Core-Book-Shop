@@ -26,11 +26,6 @@ namespace BookShopSystem.Tests
         }
 
 
-        /*[SetUp]
-        public void Setup()
-        {
-        }*/
-
         [Test]
         public async Task ManagerExistsByUserIdAsyncShouldReturnTrueWhenExists()
         {

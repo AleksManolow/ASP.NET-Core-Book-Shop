@@ -30,11 +30,6 @@ namespace BookShopSystem.Tests
             this.wishlistService = new WishlistService(this.dbContext);
         }
 
-        /*[SetUp]
-        public void Setup()
-        {
-        }*/
-
         [Test]
         public async Task IsUserWithIdWishBookWithIdAsyncShouldReturnTrueWhenExists()
         {

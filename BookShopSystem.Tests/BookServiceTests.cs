@@ -30,12 +30,6 @@ namespace BookShopSystem.Tests
             SeedDatabase(this.dbContext);
             this.bookService = new BookService(this.dbContext);
         }
-
-        /*[SetUp]
-        public void Setup()
-        {
-        }*/
-
         [Test]
         public async Task ExistsByIdAsyncShouldReturnTrueWhenExists()
         {

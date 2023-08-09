@@ -32,10 +32,6 @@ namespace BookShopSystem.Tests
             this.userService = new UserService(this.dbContext);
         }
 
-        /*[SetUp]
-        public void Setup()
-        {
-        }*/
         [Test]
         public async Task GetUserProfileInfoShouldReturnTrueWhenExists() 
         {

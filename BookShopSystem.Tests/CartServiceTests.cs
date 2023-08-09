@@ -29,12 +29,6 @@ namespace BookShopSystem.Tests
             SeedDatabase(this.dbContext);
             this.cartService = new CartService(this.dbContext);
         }
-
-        /*[SetUp]
-        public void Setup()
-        {
-
-        }*/
         [Test]
         public async Task HasBookWithIdAndUserIdInCartAsyncShouldReturnTrueWhenExists()
         {
