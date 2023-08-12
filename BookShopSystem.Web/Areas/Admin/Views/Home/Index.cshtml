@@ -31,10 +31,10 @@
 
 <style>
     .bg-image {
-        background-image: url('https://example.com/path/to/your/image.jpg'); /* Заменете с реалния URL на картинката */
+        background-image: url('https://example.com/path/to/your/image.jpg'); 
         background-size: cover;
         background-position: center;
-        height: 400px; /* Променете височината според вашите нужди */
+        height: 400px; 
         display: flex;
         justify-content: center;
         align-items: center;
@@ -43,7 +43,7 @@
     }
 
     .bg-overlay {
-        background-color: rgba(0, 0, 0, 0.6); /* Цвят на прозрачния слой */
+        background-color: rgba(0, 0, 0, 0.6); 
         position: absolute;
         top: 0;
         left: 0;
@@ -56,7 +56,7 @@
         z-index: 1;
     }
 
-        /* Стилове на текста */
+        
         .bg-content h2 {
             font-size: 36px;
             margin-bottom: 20px;
@@ -67,7 +67,7 @@
             line-height: 1.6;
         }
 
-        /* Стилове на бутоните */
+        
         .bg-content .btn {
             padding: 10px 20px;
             border-radius: 5px;
@@ -95,7 +95,7 @@
         <span>  |   </span>
         <a asp-area="" asp-controller="Book" asp-action="Add" class="btn btn-primary btn-lg">Add Book</a>
         <span>  |   </span>
-        <a asp-area="Admin" asp-controller="Book" asp-action="Mine" class="btn btn-primary btn-lg">My Book</a>
+        <a asp-area="Admin" asp-controller="Book" asp-action="Mine" class="btn btn-primary btn-lg">My Books</a>
         <span>  |   </span>
         <a asp-area="Admin" asp-controller="User" asp-action="All" class="btn btn-primary btn-lg">All Users</a>
     </div>
