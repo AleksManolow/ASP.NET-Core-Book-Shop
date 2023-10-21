@@ -77,3 +77,9 @@ Those users are seeded into the DB once the initial migration is applied.
 Unknown User:  Home View
 ![image](https://github.com/AleksManolow/ASP.NET-Core-Book-Shop/assets/104732760/a0667761-4e1a-4c62-94ac-9b71bbc668ad)
 
+The Unknown User can see All Books.
+![image](https://github.com/AleksManolow/ASP.NET-Core-Book-Shop/assets/104732760/2ae843db-5bb2-4f69-8046-a6ce7159c3fa)
+
+The Unknown User can see Book Details.
+![image](https://github.com/AleksManolow/ASP.NET-Core-Book-Shop/assets/104732760/950540f9-7475-416b-8d3c-5ba2ebfcae7c)
+
