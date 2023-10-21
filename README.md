@@ -59,3 +59,21 @@ Those users are seeded into the DB once the initial migration is applied.
    -- UserName: angelp123@softuni.bg
   
    -- Password: Angel123456
+
+## :hammer: Build With
+- ASP.NET Core 6
+  -- Database layer with 8 entity models. The "Attractions" entity is implemented on the DB level, but it has to be added to the service and the UI layers.
+  -- UI layer with 6 controllers + 1 more in the “Admin” area.
+  -- Service layer with 7 services.
+  -- Test layer for services and controllers with 28 tests
+  -- 25+ Views.
+- Entity Framework Core
+- Microsoft SQL Server
+- HTML&CSS
+- TempData messages
+- NUnit
+
+##  :camera: Gallery
+Unknown User:  Home View
+![image](https://github.com/AleksManolow/ASP.NET-Core-Book-Shop/assets/104732760/a0667761-4e1a-4c62-94ac-9b71bbc668ad)
+
