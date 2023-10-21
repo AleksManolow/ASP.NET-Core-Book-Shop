@@ -89,3 +89,29 @@ Register View:
 Login View:
 ![image](https://github.com/AleksManolow/ASP.NET-Core-Book-Shop/assets/104732760/55066d80-b98d-4c7b-a0ae-b4edef3c33dc)
 
+The Normal User can see their Library.
+![image](https://github.com/AleksManolow/ASP.NET-Core-Book-Shop/assets/104732760/7a1ec933-5019-46e6-a2ce-5300cf11007c)
+
+The Normal User can see their WishList and add in there.
+![image](https://github.com/AleksManolow/ASP.NET-Core-Book-Shop/assets/104732760/e55784ce-bb6e-49e6-8879-5612811b2754)
+
+Normanoia Usher becomes Мanager.
+![image](https://github.com/AleksManolow/ASP.NET-Core-Book-Shop/assets/104732760/0dc5ac05-5c74-4427-9374-ff43da1c7963)
+
+The Normal User can see their Cart and add in there.
+![image](https://github.com/AleksManolow/ASP.NET-Core-Book-Shop/assets/104732760/8ab1637b-2367-415d-b427-e8f4c287d5d2)
+
+The Normal User can see their Profile.
+![image](https://github.com/AleksManolow/ASP.NET-Core-Book-Shop/assets/104732760/f25b1efb-347b-4e6d-88d1-c533a12a2827)
+
+The Manager can see Add Books.
+![image](https://github.com/AleksManolow/ASP.NET-Core-Book-Shop/assets/104732760/9d4dd66c-acc6-44e8-9e6d-6098dd46017e)
+
+The Admin Menu
+![image](https://github.com/AleksManolow/ASP.NET-Core-Book-Shop/assets/104732760/daf28d63-b416-4762-b960-765a50566341)
+
+Databse Diagram
+![image](https://github.com/AleksManolow/ASP.NET-Core-Book-Shop/assets/104732760/ae25ba69-690f-45d5-971d-b600b490c6a2)
+
+
+
