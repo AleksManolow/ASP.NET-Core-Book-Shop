@@ -83,3 +83,9 @@ The Unknown User can see All Books.
 The Unknown User can see Book Details.
 ![image](https://github.com/AleksManolow/ASP.NET-Core-Book-Shop/assets/104732760/950540f9-7475-416b-8d3c-5ba2ebfcae7c)
 
+Register View: 
+![image](https://github.com/AleksManolow/ASP.NET-Core-Book-Shop/assets/104732760/1ddd2403-8097-4e34-bc8a-be77d11946bc)
+
+Login View:
+![image](https://github.com/AleksManolow/ASP.NET-Core-Book-Shop/assets/104732760/55066d80-b98d-4c7b-a0ae-b4edef3c33dc)
+
